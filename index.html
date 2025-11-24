@@ -314,7 +314,6 @@
 <body>
   <div class="app">
     <header>
-      <!-- Cambia el src por la ruta de tu logo circular si es necesario -->
       <img src="logo-hidromotions-circular.png" alt="Logo HidroMotions" class="logo" />
       <div class="titles">
         <h1>Hidromotions &mdash; Inventario</h1>
@@ -375,9 +374,9 @@
           </div>
 
           <div class="field">
-            <label for="talla">Talla</label>
+            <label for="talla">Talla (solo EPP)</label>
             <select id="talla">
-              <option value="">Selecciona una talla</option>
+              <option value="">Sin talla / no aplica</option>
               <option value="S">S</option>
               <option value="M">M</option>
               <option value="L">L</option>
@@ -482,7 +481,6 @@
       }
     }
 
-    // --- Utilidades ---
     function limpiarFormulario() {
       document.querySelector("input[name='movimiento'][value='entrada']").checked = true;
       document.getElementById("categoria").value = "";
@@ -567,8 +565,15 @@
       const talla = document.getElementById("talla").value.trim();
       const cantidadValor = document.getElementById("cantidad").value.trim();
 
-      if (!categoria || !nombre || !marca || !talla || !cantidadValor) {
-        alert("Por favor completa todos los campos (incluyendo talla) antes de aplicar el movimiento.");
+      // Campos básicos obligatorios
+      if (!categoria || !nombre || !marca || !cantidadValor) {
+        alert("Por favor completa categoría, nombre, marca y cantidad antes de aplicar el movimiento.");
+        return;
+      }
+
+      // Si es EPP, la talla es obligatoria
+      if (categoria === "EPP" && !talla) {
+        alert("Para EPP debes seleccionar una talla.");
         return;
       }
 
@@ -584,7 +589,7 @@
           item.categoria.toLowerCase() === categoria.toLowerCase() &&
           item.nombre.toLowerCase() === nombre.toLowerCase() &&
           item.marca.toLowerCase() === marca.toLowerCase() &&
-          (item.talla || "").toLowerCase() === talla.toLowerCase()
+          (item.talla || "").toLowerCase() === (talla || "").toLowerCase()
         );
       });
 
@@ -597,14 +602,14 @@
             categoria,
             nombre,
             marca,
-            talla,
+            talla: talla || "",
             cantidad,
           });
         }
       } else {
         // SALIDA: solo se puede si el producto existe
         if (idx < 0) {
-          alert("No se encontró el producto (con esa talla) en el inventario para realizar la salida.");
+          alert("No se encontró el producto (con esa talla, si aplica) en el inventario para realizar la salida.");
           return;
         }
         const disponible = inventario[idx].cantidad;
@@ -641,7 +646,6 @@
         csv += `\"${fila[0]}\",\"${fila[1]}\",\"${fila[2]}\",\"${fila[3]}\",${fila[4]}\n`;
       });
 
-      // Agregar BOM para que Excel reconozca UTF-8
       const blob = new Blob(["\uFEFF" + csv], {
         type: "text/csv;charset=utf-8;",
       });
