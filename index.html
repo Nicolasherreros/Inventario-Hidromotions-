@@ -1,0 +1,654 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Inventario HidroMotions - Prototipo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --azul-oscuro: #003e7e;
+      --azul-medio: #0056a6;
+      --amarillo-gota: #f4b000;
+      --gris-suave: #f2f2f2;
+      --texto-principal: #ffffff;
+      --texto-oscuro: #222222;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, sans-serif;
+      background: radial-gradient(circle at top, #0b7bd6 0, #002b5c 60%, #001733 100%);
+      color: var(--texto-oscuro);
+      display: flex;
+      justify-content: center;
+      padding: 24px 12px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1000px;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 90vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, var(--azul-oscuro), var(--azul-medio));
+      color: var(--texto-principal);
+      padding: 16px 18px 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    header img.logo {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #ffffff11;
+      object-fit: contain;
+    }
+
+    header .titles {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    header p {
+      margin: 0;
+      font-size: 0.85rem;
+      opacity: 0.9;
+    }
+
+    main {
+      padding: 16px 16px 10px;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.4fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 900px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 8px 6px;
+      }
+      .app {
+        border-radius: 0;
+        min-height: 100vh;
+      }
+      header {
+        padding: 12px 10px;
+        gap: 10px;
+      }
+      header img.logo {
+        width: 52px;
+        height: 52px;
+      }
+      header h1 {
+        font-size: 1.05rem;
+      }
+      header p {
+        font-size: 0.78rem;
+      }
+    }
+
+    .card {
+      background: var(--gris-suave);
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+    }
+
+    .card h2 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      color: var(--azul-oscuro);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card h2 span.small {
+      font-size: 0.8rem;
+      color: #555;
+      font-weight: normal;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.88rem;
+    }
+
+    .field label {
+      font-weight: 600;
+      color: #333;
+    }
+
+    .field input,
+    .field select {
+      border-radius: 8px;
+      border: 1px solid #cccccc;
+      padding: 7px 9px;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border 0.15s, box-shadow 0.15s, background 0.15s;
+      background: #ffffff;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--azul-medio);
+      box-shadow: 0 0 0 2px rgba(0, 86, 166, 0.15);
+      background: #fdfefe;
+    }
+
+    .movimiento-radio-group {
+      display: inline-flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      font-size: 0.86rem;
+    }
+
+    .movimiento-radio-group label {
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.02em;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.2s;
+      white-space: nowrap;
+    }
+
+    button.primary {
+      background: var(--azul-medio);
+      color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 64, 128, 0.35);
+    }
+
+    button.primary:hover {
+      background: #0b6dc4;
+      transform: translateY(-1px);
+      box-shadow: 0 7px 16px rgba(0, 64, 128, 0.45);
+    }
+
+    button.secondary {
+      background: #ffffff;
+      color: var(--azul-oscuro);
+      border: 1px solid rgba(0, 62, 126, 0.25);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    }
+
+    button.secondary:hover {
+      background: #f5f8ff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    }
+
+    button span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--amarillo-gota);
+      display: inline-block;
+    }
+
+    .tabla-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      min-width: 430px;
+    }
+
+    thead {
+      background: var(--azul-oscuro);
+      color: #ffffff;
+    }
+
+    thead th {
+      padding: 6px 8px;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tbody td {
+      padding: 6px 8px;
+      border-top: 1px solid #e0e0e0;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    .empty {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: 8px;
+      font-style: italic;
+    }
+
+    .summary {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: #444;
+      display: flex;
+      justify-content: space-between;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 10px 16px 12px;
+      background: #f8f8f8;
+      font-size: 0.78rem;
+      color: #555;
+      border-top: 1px solid #e0e0e0;
+      text-align: center;
+    }
+
+    footer strong {
+      color: #b00020;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <!-- Cambia el src por la ruta de tu logo circular -->
+      <img src="logo-hidromotions-circular.png" alt="Logo HidroMotions" class="logo" />
+      <div class="titles">
+        <h1>Hidromotions &mdash; Inventario</h1>
+        <p>Área de Bodega y Logística &bull; Prototipo de control rápido</p>
+      </div>
+    </header>
+
+    <main>
+      <!-- FORMULARIO -->
+      <section class="card">
+        <h2>
+          Nuevo movimiento de inventario
+          <span class="small">Entradas y salidas</span>
+        </h2>
+        <div class="form-grid">
+          <div class="field">
+            <label for="tipo-movimiento">Tipo de movimiento</label>
+            <div class="movimiento-radio-group" id="tipo-movimiento">
+              <label>
+                <input type="radio" name="movimiento" value="entrada" checked />
+                Entrada (suma)
+              </label>
+              <label>
+                <input type="radio" name="movimiento" value="salida" />
+                Salida (resta)
+              </label>
+            </div>
+          </div>
+          <div class="field">
+            <label for="categoria">Categoría</label>
+            <select id="categoria">
+              <option value="">Selecciona una categoría</option>
+              <option value="EPP">EPP</option>
+              <option value="Herramientas">Herramientas</option>
+              <option value="Repuestos">Repuestos</option>
+              <option value="Consumibles">Consumibles</option>
+              <option value="Otros">Otros</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="nombre">Nombre del producto</label>
+            <input
+              type="text"
+              id="nombre"
+              placeholder="Ej: Casco de seguridad, guante nitrilo, bomba, etc."
+            />
+          </div>
+          <div class="field">
+            <label for="marca">Marca / Modelo</label>
+            <input
+              type="text"
+              id="marca"
+              placeholder="Ej: 3M, MSA, Honeywell..."
+            />
+          </div>
+          <div class="field">
+            <label for="cantidad">Cantidad</label>
+            <input
+              type="number"
+              id="cantidad"
+              min="1"
+              step="1"
+              placeholder="Ej: 10"
+            />
+          </div>
+        </div>
+
+        <div class="buttons">
+          <button class="primary" id="btn-agregar">
+            <span class="dot"></span>
+            Aplicar movimiento
+          </button>
+          <button class="secondary" id="btn-limpiar">
+            Limpiar formulario
+          </button>
+        </div>
+      </section>
+
+      <!-- TABLA -->
+      <section class="card">
+        <h2>
+          Inventario actual
+          <span class="small" id="contador-items">0 ítems</span>
+        </h2>
+        <div id="contenedor-tabla">
+          <p class="empty" id="mensaje-vacio">
+            Aún no hay productos en el inventario. Agrega el primero desde el formulario.
+          </p>
+          <div class="tabla-wrapper">
+            <table id="tabla-inventario" style="display: none;">
+              <thead>
+                <tr>
+                  <th>Categoría</th>
+                  <th>Nombre</th>
+                  <th>Marca</th>
+                  <th style="text-align:right;">Cantidad</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="summary" id="resumen">
+          <span><strong>Productos distintos:</strong> 0</span>
+          <span><strong>Total de unidades:</strong> 0</span>
+        </div>
+
+        <div class="buttons" style="margin-top: 10px;">
+          <button class="secondary" id="btn-exportar">
+            Exportar a Excel (CSV)
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <strong>IMPORTANTE:</strong> Esta página no es oficial, es de uso personal
+      del área de bodega y logística, solo es un prototipo.
+    </footer>
+  </div>
+
+  <script>
+    // --- Estado en memoria ---
+    let inventario = [];
+
+    // --- Cargar desde localStorage al iniciar ---
+    (function cargarDesdeStorage() {
+      try {
+        const guardado = localStorage.getItem("inventario_hidromotions");
+        if (guardado) {
+          inventario = JSON.parse(guardado);
+          renderizarTabla();
+        }
+      } catch (e) {
+        console.error("Error al cargar inventario desde storage:", e);
+      }
+    })();
+
+    function guardarEnStorage() {
+      try {
+        localStorage.setItem(
+          "inventario_hidromotions",
+          JSON.stringify(inventario)
+        );
+      } catch (e) {
+        console.error("Error al guardar en storage:", e);
+      }
+    }
+
+    // --- Utilidades ---
+    function limpiarFormulario() {
+      document.querySelector("input[name='movimiento'][value='entrada']").checked = true;
+      document.getElementById("categoria").value = "";
+      document.getElementById("nombre").value = "";
+      document.getElementById("marca").value = "";
+      document.getElementById("cantidad").value = "";
+    }
+
+    function renderizarTabla() {
+      const tbody = document.querySelector("#tabla-inventario tbody");
+      const tabla = document.getElementById("tabla-inventario");
+      const mensajeVacio = document.getElementById("mensaje-vacio");
+      const contador = document.getElementById("contador-items");
+      const resumen = document.getElementById("resumen");
+
+      tbody.innerHTML = "";
+
+      if (inventario.length === 0) {
+        tabla.style.display = "none";
+        mensajeVacio.style.display = "block";
+        contador.textContent = "0 ítems";
+        resumen.innerHTML =
+          '<span><strong>Productos distintos:</strong> 0</span>' +
+          '<span><strong>Total de unidades:</strong> 0</span>';
+        return;
+      }
+
+      tabla.style.display = "table";
+      mensajeVacio.style.display = "none";
+
+      let totalUnidades = 0;
+
+      inventario.forEach((item) => {
+        const tr = document.createElement("tr");
+
+        const tdCat = document.createElement("td");
+        tdCat.textContent = item.categoria;
+        tr.appendChild(tdCat);
+
+        const tdNom = document.createElement("td");
+        tdNom.textContent = item.nombre;
+        tr.appendChild(tdNom);
+
+        const tdMarca = document.createElement("td");
+        tdMarca.textContent = item.marca;
+        tr.appendChild(tdMarca);
+
+        const tdCant = document.createElement("td");
+        tdCant.textContent = item.cantidad;
+        tdCant.style.textAlign = "right";
+        tr.appendChild(tdCant);
+
+        tbody.appendChild(tr);
+
+        totalUnidades += item.cantidad;
+      });
+
+      contador.textContent = `${inventario.length} ítems`;
+      resumen.innerHTML =
+        `<span><strong>Productos distintos:</strong> ${inventario.length}</span>` +
+        `<span><strong>Total de unidades:</strong> ${totalUnidades}</span>`;
+    }
+
+    function obtenerTipoMovimiento() {
+      const radios = document.querySelectorAll("input[name='movimiento']");
+      for (const r of radios) {
+        if (r.checked) return r.value; // "entrada" o "salida"
+      }
+      return "entrada";
+    }
+
+    function agregarActualizarProducto() {
+      const tipo = obtenerTipoMovimiento();
+      const categoria = document.getElementById("categoria").value.trim();
+      const nombre = document.getElementById("nombre").value.trim();
+      const marca = document.getElementById("marca").value.trim();
+      const cantidadValor = document.getElementById("cantidad").value.trim();
+
+      if (!categoria || !nombre || !marca || !cantidadValor) {
+        alert("Por favor completa todos los campos antes de aplicar el movimiento.");
+        return;
+      }
+
+      const cantidad = parseInt(cantidadValor, 10);
+      if (isNaN(cantidad) || cantidad <= 0) {
+        alert("La cantidad debe ser un número mayor a 0.");
+        return;
+      }
+
+      // Buscar si ya existe el producto (misma categoría + nombre + marca)
+      const idx = inventario.findIndex((item) => {
+        return (
+          item.categoria.toLowerCase() === categoria.toLowerCase() &&
+          item.nombre.toLowerCase() === nombre.toLowerCase() &&
+          item.marca.toLowerCase() === marca.toLowerCase()
+        );
+      });
+
+      if (tipo === "entrada") {
+        // ENTRADA: si existe, suma; si no existe, crea
+        if (idx >= 0) {
+          inventario[idx].cantidad += cantidad;
+        } else {
+          inventario.push({
+            categoria,
+            nombre,
+            marca,
+            cantidad,
+          });
+        }
+      } else {
+        // SALIDA: solo se puede si el producto existe
+        if (idx < 0) {
+          alert("No se encontró el producto en el inventario para realizar la salida.");
+          return;
+        }
+        const disponible = inventario[idx].cantidad;
+        if (cantidad > disponible) {
+          if (!confirm(`Estás intentando sacar ${cantidad} unidades, pero solo hay ${disponible}. ¿Quieres dejar la cantidad en 0?`)) {
+            return;
+          }
+          inventario[idx].cantidad = 0;
+        } else {
+          inventario[idx].cantidad -= cantidad;
+        }
+      }
+
+      guardarEnStorage();
+      renderizarTabla();
+      limpiarFormulario();
+    }
+
+    function exportarCSV() {
+      if (inventario.length === 0) {
+        alert("No hay datos en el inventario para exportar.");
+        return;
+      }
+
+      let csv = "Categoría,Nombre,Marca,Cantidad\n";
+      inventario.forEach((item) => {
+        const fila = [
+          item.categoria,
+          item.nombre.replace(/\"/g, '""'),
+          item.marca.replace(/\"/g, '""'),
+          item.cantidad,
+        ];
+        csv += `\"${fila[0]}\",\"${fila[1]}\",\"${fila[2]}\",${fila[3]}\n`;
+      });
+
+      // Agregar BOM para que Excel reconozca UTF-8
+      const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;",
+      });
+      const url = URL.createObjectURL(blob);
+
+      const enlace = document.createElement("a");
+      enlace.href = url;
+      enlace.download = "inventario_hidromotions.csv";
+      document.body.appendChild(enlace);
+      enlace.click();
+      document.body.removeChild(enlace);
+      URL.revokeObjectURL(url);
+    }
+
+    // --- Eventos ---
+    document
+      .getElementById("btn-agregar")
+      .addEventListener("click", agregarActualizarProducto);
+
+    document
+      .getElementById("btn-limpiar")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        limpiarFormulario();
+      });
+
+    document
+      .getElementById("btn-exportar")
+      .addEventListener("click", (e) => {
+        e.preventDefault();
+        exportarCSV();
+      });
+  </script>
+</body>
+</html>
