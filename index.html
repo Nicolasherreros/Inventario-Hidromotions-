@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -256,7 +255,7 @@
       background: #ffffff;
       border-radius: 10px;
       overflow: hidden;
-      min-width: 430px;
+      min-width: 480px;
     }
 
     thead {
@@ -315,7 +314,7 @@
 <body>
   <div class="app">
     <header>
-      <!-- Cambia el src por la ruta de tu logo circular -->
+      <!-- Cambia el src por la ruta de tu logo circular si es necesario -->
       <img src="logo-hidromotions-circular.png" alt="Logo HidroMotions" class="logo" />
       <div class="titles">
         <h1>Hidromotions &mdash; Inventario</h1>
@@ -344,6 +343,7 @@
               </label>
             </div>
           </div>
+
           <div class="field">
             <label for="categoria">Categoría</label>
             <select id="categoria">
@@ -355,6 +355,7 @@
               <option value="Otros">Otros</option>
             </select>
           </div>
+
           <div class="field">
             <label for="nombre">Nombre del producto</label>
             <input
@@ -363,6 +364,7 @@
               placeholder="Ej: Casco de seguridad, guante nitrilo, bomba, etc."
             />
           </div>
+
           <div class="field">
             <label for="marca">Marca / Modelo</label>
             <input
@@ -371,6 +373,19 @@
               placeholder="Ej: 3M, MSA, Honeywell..."
             />
           </div>
+
+          <div class="field">
+            <label for="talla">Talla</label>
+            <select id="talla">
+              <option value="">Selecciona una talla</option>
+              <option value="S">S</option>
+              <option value="M">M</option>
+              <option value="L">L</option>
+              <option value="XL">XL</option>
+              <option value="XXL">XXL</option>
+            </select>
+          </div>
+
           <div class="field">
             <label for="cantidad">Cantidad</label>
             <input
@@ -411,6 +426,7 @@
                   <th>Categoría</th>
                   <th>Nombre</th>
                   <th>Marca</th>
+                  <th>Talla</th>
                   <th style="text-align:right;">Cantidad</th>
                 </tr>
               </thead>
@@ -472,6 +488,7 @@
       document.getElementById("categoria").value = "";
       document.getElementById("nombre").value = "";
       document.getElementById("marca").value = "";
+      document.getElementById("talla").value = "";
       document.getElementById("cantidad").value = "";
     }
 
@@ -514,6 +531,10 @@
         tdMarca.textContent = item.marca;
         tr.appendChild(tdMarca);
 
+        const tdTalla = document.createElement("td");
+        tdTalla.textContent = item.talla || "-";
+        tr.appendChild(tdTalla);
+
         const tdCant = document.createElement("td");
         tdCant.textContent = item.cantidad;
         tdCant.style.textAlign = "right";
@@ -543,10 +564,11 @@
       const categoria = document.getElementById("categoria").value.trim();
       const nombre = document.getElementById("nombre").value.trim();
       const marca = document.getElementById("marca").value.trim();
+      const talla = document.getElementById("talla").value.trim();
       const cantidadValor = document.getElementById("cantidad").value.trim();
 
-      if (!categoria || !nombre || !marca || !cantidadValor) {
-        alert("Por favor completa todos los campos antes de aplicar el movimiento.");
+      if (!categoria || !nombre || !marca || !talla || !cantidadValor) {
+        alert("Por favor completa todos los campos (incluyendo talla) antes de aplicar el movimiento.");
         return;
       }
 
@@ -556,12 +578,13 @@
         return;
       }
 
-      // Buscar si ya existe el producto (misma categoría + nombre + marca)
+      // Buscar si ya existe el producto (misma categoría + nombre + marca + talla)
       const idx = inventario.findIndex((item) => {
         return (
           item.categoria.toLowerCase() === categoria.toLowerCase() &&
           item.nombre.toLowerCase() === nombre.toLowerCase() &&
-          item.marca.toLowerCase() === marca.toLowerCase()
+          item.marca.toLowerCase() === marca.toLowerCase() &&
+          (item.talla || "").toLowerCase() === talla.toLowerCase()
         );
       });
 
@@ -574,13 +597,14 @@
             categoria,
             nombre,
             marca,
+            talla,
             cantidad,
           });
         }
       } else {
         // SALIDA: solo se puede si el producto existe
         if (idx < 0) {
-          alert("No se encontró el producto en el inventario para realizar la salida.");
+          alert("No se encontró el producto (con esa talla) en el inventario para realizar la salida.");
           return;
         }
         const disponible = inventario[idx].cantidad;
@@ -605,15 +629,16 @@
         return;
       }
 
-      let csv = "Categoría,Nombre,Marca,Cantidad\n";
+      let csv = "Categoría,Nombre,Marca,Talla,Cantidad\n";
       inventario.forEach((item) => {
         const fila = [
           item.categoria,
           item.nombre.replace(/\"/g, '""'),
           item.marca.replace(/\"/g, '""'),
+          item.talla || "",
           item.cantidad,
         ];
-        csv += `\"${fila[0]}\",\"${fila[1]}\",\"${fila[2]}\",${fila[3]}\n`;
+        csv += `\"${fila[0]}\",\"${fila[1]}\",\"${fila[2]}\",\"${fila[3]}\",${fila[4]}\n`;
       });
 
       // Agregar BOM para que Excel reconozca UTF-8
