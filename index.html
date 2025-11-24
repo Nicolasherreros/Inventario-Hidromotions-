@@ -255,7 +255,7 @@
       background: #ffffff;
       border-radius: 10px;
       overflow: hidden;
-      min-width: 480px;
+      min-width: 520px;
     }
 
     thead {
@@ -344,6 +344,20 @@
           </div>
 
           <div class="field">
+            <label for="tipo-producto">Tipo de producto</label>
+            <div class="movimiento-radio-group" id="tipo-producto">
+              <label>
+                <input type="radio" name="tipoProducto" value="existente" checked />
+                Producto existente
+              </label>
+              <label>
+                <input type="radio" name="tipoProducto" value="nuevo" />
+                Producto nuevo
+              </label>
+            </div>
+          </div>
+
+          <div class="field">
             <label for="categoria">Categoría</label>
             <select id="categoria">
               <option value="">Selecciona una categoría</option>
@@ -374,15 +388,12 @@
           </div>
 
           <div class="field">
-            <label for="talla">Talla (solo EPP)</label>
-            <select id="talla">
-              <option value="">Sin talla / no aplica</option>
-              <option value="S">S</option>
-              <option value="M">M</option>
-              <option value="L">L</option>
-              <option value="XL">XL</option>
-              <option value="XXL">XXL</option>
-            </select>
+            <label for="talla">Talla (texto libre, obligatoria solo para EPP)</label>
+            <input
+              type="text"
+              id="talla"
+              placeholder="Ej: M, XL, 42, 38-39..."
+            />
           </div>
 
           <div class="field">
@@ -427,6 +438,7 @@
                   <th>Marca</th>
                   <th>Talla</th>
                   <th style="text-align:right;">Cantidad</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody></tbody>
@@ -483,6 +495,7 @@
 
     function limpiarFormulario() {
       document.querySelector("input[name='movimiento'][value='entrada']").checked = true;
+      document.querySelector("input[name='tipoProducto'][value='existente']").checked = true;
       document.getElementById("categoria").value = "";
       document.getElementById("nombre").value = "";
       document.getElementById("marca").value = "";
@@ -514,7 +527,7 @@
 
       let totalUnidades = 0;
 
-      inventario.forEach((item) => {
+      inventario.forEach((item, index) => {
         const tr = document.createElement("tr");
 
         const tdCat = document.createElement("td");
@@ -538,6 +551,14 @@
         tdCant.style.textAlign = "right";
         tr.appendChild(tdCant);
 
+        const tdAcc = document.createElement("td");
+        const btnDel = document.createElement("button");
+        btnDel.textContent = "Eliminar";
+        btnDel.className = "secondary btn-eliminar";
+        btnDel.dataset.index = String(index);
+        tdAcc.appendChild(btnDel);
+        tr.appendChild(tdAcc);
+
         tbody.appendChild(tr);
 
         totalUnidades += item.cantidad;
@@ -557,8 +578,17 @@
       return "entrada";
     }
 
+    function obtenerTipoProducto() {
+      const radios = document.querySelectorAll("input[name='tipoProducto']");
+      for (const r of radios) {
+        if (r.checked) return r.value; // "existente" o "nuevo"
+      }
+      return "existente";
+    }
+
     function agregarActualizarProducto() {
       const tipo = obtenerTipoMovimiento();
+      const tipoProducto = obtenerTipoProducto();
       const categoria = document.getElementById("categoria").value.trim();
       const nombre = document.getElementById("nombre").value.trim();
       const marca = document.getElementById("marca").value.trim();
@@ -573,7 +603,7 @@
 
       // Si es EPP, la talla es obligatoria
       if (categoria === "EPP" && !talla) {
-        alert("Para EPP debes seleccionar una talla.");
+        alert("Para EPP debes escribir una talla (ej: M, XL, 42...).");
         return;
       }
 
@@ -594,17 +624,27 @@
       });
 
       if (tipo === "entrada") {
-        // ENTRADA: si existe, suma; si no existe, crea
-        if (idx >= 0) {
+        if (tipoProducto === "existente") {
+          // Debe existir uno igual
+          if (idx < 0) {
+            alert("Marcaste como producto existente, pero no se encontró en el inventario.\nRevisa que categoría, nombre, marca y talla estén escritos exactamente igual.");
+            return;
+          }
           inventario[idx].cantidad += cantidad;
         } else {
-          inventario.push({
-            categoria,
-            nombre,
-            marca,
-            talla: talla || "",
-            cantidad,
-          });
+          // Producto nuevo
+          if (idx >= 0) {
+            // Ya existe uno igual, sumamos para no duplicar
+            inventario[idx].cantidad += cantidad;
+          } else {
+            inventario.push({
+              categoria,
+              nombre,
+              marca,
+              talla: talla || "",
+              cantidad,
+            });
+          }
         }
       } else {
         // SALIDA: solo se puede si el producto existe
@@ -678,6 +718,24 @@
         e.preventDefault();
         exportarCSV();
       });
+
+    // Eliminar producto desde la tabla (delegación de eventos)
+    document
+      .querySelector("#tabla-inventario tbody")
+      .addEventListener("click", (e) => {
+        const target = e.target;
+        if (target && target.classList.contains("btn-eliminar")) {
+          const index = parseInt(target.dataset.index, 10);
+          if (!isNaN(index)) {
+            if (confirm("¿Eliminar este producto del inventario?")) {
+              inventario.splice(index, 1);
+              guardarEnStorage();
+              renderizarTabla();
+            }
+          }
+        }
+      });
   </script>
 </body>
 </html>
+
