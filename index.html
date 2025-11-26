@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -113,17 +112,20 @@
     }
 
     input[type="text"],
-    input[type="number"] {
+    input[type="number"],
+    select {
       padding: 8px 12px;
       border-radius: 999px;
       border: 1px solid var(--border);
       font-size: 0.95rem;
       outline: none;
       transition: border-color 0.15s, box-shadow 0.15s;
+      background: #ffffff;
     }
 
     input[type="text"]:focus,
-    input[type="number"]:focus {
+    input[type="number"]:focus,
+    select:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
     }
@@ -515,6 +517,26 @@
       <div>
         <div class="card">
           <h2>Comentarios / Retiros</h2>
+
+          <div class="form-row" style="margin-top: 0; margin-bottom: 8px; align-items: flex-end;">
+            <div class="field">
+              <label for="filtroComentarios">Filtrar por periodo</label>
+              <select id="filtroComentarios">
+                <option value="todo">Todo</option>
+                <option value="hoy">Hoy</option>
+                <option value="semana">Esta semana</option>
+                <option value="mes">Este mes</option>
+                <option value="anio">Este año</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>&nbsp;</label>
+              <button type="button" id="btnDescargarComentarios" class="btn secondary">
+                Descargar retiros
+              </button>
+            </div>
+          </div>
+
           <ul id="listaComentarios" class="comentarios-list">
             <!-- Comentarios dinámicos -->
           </ul>
@@ -562,6 +584,82 @@
 
     function guardarComentarios() {
       localStorage.setItem("inventarioHidromotionsComentarios", JSON.stringify(comentarios));
+    }
+
+    // -----------------------------
+    // Helpers de fechas para filtros
+    // -----------------------------
+    function obtenerFechaComentario(c) {
+      if (c.timestamp) {
+        const d = new Date(c.timestamp);
+        if (!isNaN(d)) return d;
+      }
+      const d2 = new Date(c.fecha);
+      if (!isNaN(d2)) return d2;
+      return null;
+    }
+
+    function esMismoDia(a, b) {
+      return (
+        a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth() &&
+        a.getDate() === b.getDate()
+      );
+    }
+
+    function esMismaSemana(a, b) {
+      // Semana con inicio lunes
+      const diaSemana = b.getDay(); // 0 domingo, 1 lunes...
+      const diffAlLunes = (diaSemana + 6) % 7;
+      const inicioSemana = new Date(b);
+      inicioSemana.setHours(0, 0, 0, 0);
+      inicioSemana.setDate(b.getDate() - diffAlLunes);
+
+      const finSemana = new Date(inicioSemana);
+      finSemana.setDate(inicioSemana.getDate() + 7);
+
+      return a >= inicioSemana && a < finSemana;
+    }
+
+    function esMismoMes(a, b) {
+      return (
+        a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth()
+      );
+    }
+
+    function esMismoAnio(a, b) {
+      return a.getFullYear() === b.getFullYear();
+    }
+
+    function obtenerComentariosFiltrados() {
+      const filtro = document.getElementById("filtroComentarios").value;
+      if (!comentarios.length) return [];
+
+      if (filtro === "todo") return comentarios.slice();
+
+      const ahora = new Date();
+
+      return comentarios.filter((c) => {
+        const fechaC = obtenerFechaComentario(c);
+        if (!fechaC) {
+          // Si no se pudo interpretar, solo mostrar en "todo"
+          return false;
+        }
+        if (filtro === "hoy") {
+          return esMismoDia(fechaC, ahora);
+        }
+        if (filtro === "semana") {
+          return esMismaSemana(fechaC, ahora);
+        }
+        if (filtro === "mes") {
+          return esMismoMes(fechaC, ahora);
+        }
+        if (filtro === "anio") {
+          return esMismoAnio(fechaC, ahora);
+        }
+        return true;
+      });
     }
 
     // -----------------------------
@@ -617,14 +715,16 @@
 
       lista.innerHTML = "";
 
-      if (!comentarios.length) {
+      const filtrados = obtenerComentariosFiltrados();
+
+      if (!filtrados.length) {
         vacio.style.display = "block";
         return;
       }
 
       vacio.style.display = "none";
 
-      comentarios.forEach((c) => {
+      filtrados.forEach((c) => {
         const li = document.createElement("li");
         li.className = "comentario-item";
         li.innerHTML = `<span class="fecha">[${c.fecha}]</span> ${c.texto}`;
@@ -749,7 +849,8 @@
         existente.cantidad -= cantidad;
       }
 
-      const fecha = new Date().toLocaleString("es-CL");
+      const ahora = new Date();
+      const fechaLegible = ahora.toLocaleString("es-CL");
       let detalle = `${cantidad} unid. retiradas de "${nombre}"`;
 
       if (marca) detalle += ` (Marca: ${marca})`;
@@ -758,7 +859,8 @@
 
       comentarios.unshift({
         id: Date.now() + Math.random(),
-        fecha,
+        fecha: fechaLegible,
+        timestamp: ahora.toISOString(),
         texto: detalle,
       });
 
@@ -928,6 +1030,43 @@
 
       reader.readAsArrayBuffer(file);
     });
+
+    // -----------------------------
+    // Descargar comentarios filtrados
+    // -----------------------------
+    const btnDescargarComentarios = document.getElementById("btnDescargarComentarios");
+
+    btnDescargarComentarios.addEventListener("click", () => {
+      const filtrados = obtenerComentariosFiltrados();
+      if (!filtrados.length) {
+        alert("No hay retiros para descargar con el filtro actual.");
+        return;
+      }
+
+      let contenido = "Fecha,Detalle\n";
+      filtrados.forEach((c) => {
+        const fecha = (c.fecha || "").replace(/"/g, '""');
+        const texto = (c.texto || "").replace(/"/g, '""');
+        contenido += `"${fecha}","${texto}"\n`;
+      });
+
+      const blob = new Blob([contenido], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const hoyISO = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `retiros_${hoyISO}.csv`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    });
+
+    // -----------------------------
+    // Cambio de filtro
+    // -----------------------------
+    const filtroComentariosSelect = document.getElementById("filtroComentarios");
+    filtroComentariosSelect.addEventListener("change", renderComentarios);
 
     // -----------------------------
     // Inicio
