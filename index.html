@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -146,7 +147,7 @@
     }
 
     .btn.primary {
-      background: var(--primary);
+      background: #2563eb;
       color: #fff;
       box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
     }
@@ -167,7 +168,7 @@
 
     .btn.danger {
       background: #fee2e2;
-      color: var(--danger);
+      color: #dc2626;
     }
 
     .btn.danger:hover {
@@ -211,7 +212,7 @@
 
     .hint {
       font-size: 0.8rem;
-      color: var(--muted);
+      color: #6b7280;
       margin-top: 4px;
     }
 
@@ -225,7 +226,7 @@
     .toggle-group {
       display: inline-flex;
       padding: 4px;
-      background: var(--primary-soft);
+      background: #eff6ff;
       border-radius: 999px;
       border: 1px solid rgba(37, 99, 235, 0.15);
       gap: 4px;
@@ -247,7 +248,7 @@
     }
 
     .toggle-group input[type="radio"]:checked + label {
-      background: var(--primary);
+      background: #2563eb;
       color: #ffffff;
       box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
     }
@@ -257,7 +258,7 @@
       width: 100%;
       overflow-x: auto;
       border-radius: 16px;
-      border: 1px solid var(--border);
+      border: 1px solid #e5e7eb;
       background: #f9fafb;
     }
 
@@ -276,7 +277,7 @@
     th,
     td {
       padding: 8px 10px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #e5e7eb;
     }
 
     th {
@@ -309,14 +310,14 @@
       text-align: center;
       padding: 10px;
       font-size: 0.85rem;
-      color: var(--muted);
+      color: #6b7280;
     }
 
     /* Importar Excel */
     .excel-import {
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px dashed var(--border);
+      border-top: 1px dashed #e5e7eb;
     }
 
     input[type="file"] {
@@ -337,7 +338,7 @@
 
     .comentario-item {
       font-size: 0.85rem;
-      color: var(--comentario);
+      color: #b91c1c;
     }
 
     .comentario-item span.fecha {
@@ -347,14 +348,14 @@
 
     .comentario-vacio {
       font-size: 0.85rem;
-      color: var(--muted);
+      color: #6b7280;
     }
 
     .footer {
       margin: 12px auto 0;
       max-width: 1100px;
       font-size: 0.78rem;
-      color: var(--muted);
+      color: #6b7280;
       text-align: center;
     }
 
@@ -374,178 +375,508 @@
         justify-content: center;
       }
     }
+
+    /* ======================
+       NUEVO: PESTAÑAS (TABS)
+       ====================== */
+
+    .tabs-container {
+      margin-top: 8px;
+    }
+
+    .tabs-header {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 8px 10px;
+      border: none;
+      border-radius: 999px;
+      background: #e0e7ff;
+      color: #1f2937;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s, box-shadow 0.1s;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .tab-btn.tab-active {
+      background: #2563eb;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      transform: translateY(-1px);
+    }
+
+    .tab-btn:active {
+      transform: translateY(1px);
+      box-shadow: none;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 8px 0 0 0;
+    }
+
+    .tab-content.tab-content-active {
+      display: block;
+    }
+
+    /* ======================
+       NUEVO: CHECK LIST PEDIDOS
+       ====================== */
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: #6b7280;
+      margin-bottom: 8px;
+    }
+
+    .small-muted {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .file-input {
+      margin: 6px 0 10px;
+    }
+
+    .table-simple {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    .table-simple th,
+    .table-simple td {
+      border: 1px solid #e5e7eb;
+      padding: 6px 8px;
+      text-align: left;
+    }
+
+    .table-simple th {
+      background: #eff6ff;
+      font-weight: 600;
+    }
+
+    .radio-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      margin-right: 4px;
+      font-size: 0.8rem;
+    }
+
+    .radio-badge input {
+      accent-color: #2563eb;
+    }
+
+    .input-number-small {
+      width: 70px;
+      padding: 4px 6px;
+      font-size: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn-primary-small,
+    .btn-secondary-small,
+    .btn-danger-small {
+      border: none;
+      border-radius: 999px;
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .btn-primary-small {
+      background: #2563eb;
+      color: #ffffff;
+    }
+
+    .btn-secondary-small {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-danger-small {
+      background: #dc2626;
+      color: #ffffff;
+    }
+
+    /* ======================
+       NUEVO: HERRAMIENTAS / VEHÍCULOS
+       ====================== */
+
+    .estado-badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .estado-disponible {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .estado-en-uso {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .section-box {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 12px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+    }
+
+    .section-box h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      margin-bottom: 6px;
+    }
+
+    .section-box form {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .section-box input[type="text"] {
+      flex: 1;
+      min-width: 180px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.85rem;
+    }
+
+    .section-box label {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 640px) {
+      .tabs-header {
+        flex-direction: column;
+      }
+
+      .tab-btn {
+        flex: none;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="app">
     <div class="header">
-      <!-- Ajusta la ruta del logo según el nombre del archivo en tu repositorio -->
       <img src="hidromotions-logo.png" alt="Logo Hidromotions" class="logo" />
       <h1>Inventario Hidromotions</h1>
     </div>
 
-    <div class="layout">
-      <div>
-        <!-- Formulario para agregar / actualizar ítems -->
-        <div class="card">
-          <h2>Agregar o actualizar ítem</h2>
+    <!-- NUEVO: CONTENEDOR DE PESTAÑAS -->
+    <div class="tabs-container">
+      <div class="tabs-header">
+        <button class="tab-btn tab-active" data-tab="inventario-principal">Inventario principal</button>
+        <button class="tab-btn" data-tab="checklist-pedidos">Check list de pedidos</button>
+        <button class="tab-btn" data-tab="estado-herramientas">Herramientas y vehículos</button>
+      </div>
 
-          <form id="itemForm">
-            <div class="form-row">
-              <div class="toggle-wrapper">
-                <label>Tipo de registro</label>
-                <div class="toggle-group">
-                  <input type="radio" id="tipoNuevo" name="tipoRegistro" value="nuevo" checked />
-                  <label for="tipoNuevo">Nuevo</label>
+      <!-- PESTAÑA 1: INVENTARIO PRINCIPAL (TU PÁGINA ORIGINAL) -->
+      <div id="tab-inventario-principal" class="tab-content tab-content-active">
+        <div class="layout">
+          <div>
+            <!-- Formulario para agregar / actualizar ítems -->
+            <div class="card">
+              <h2>Agregar o actualizar ítem</h2>
 
-                  <input type="radio" id="tipoExistente" name="tipoRegistro" value="existente" />
-                  <label for="tipoExistente">Existente</label>
+              <form id="itemForm">
+                <div class="form-row">
+                  <div class="toggle-wrapper">
+                    <label>Tipo de registro</label>
+                    <div class="toggle-group">
+                      <input type="radio" id="tipoNuevo" name="tipoRegistro" value="nuevo" checked />
+                      <label for="tipoNuevo">Nuevo</label>
+
+                      <input type="radio" id="tipoExistente" name="tipoRegistro" value="existente" />
+                      <label for="tipoExistente">Existente</label>
+                    </div>
+                    <p class="hint">
+                      <strong>Nuevo:</strong> crea un ítem. |
+                      <strong>Existente:</strong> suma a uno que ya exista (mismo nombre, marca y talla).
+                    </p>
+                  </div>
+
+                  <div class="field">
+                    <label for="nombreItem">Nombre del ítem</label>
+                    <input
+                      type="text"
+                      id="nombreItem"
+                      placeholder="Ej: Chaqueta térmica"
+                      required
+                    />
+                  </div>
+
+                  <div class="field">
+                    <label for="marcaItem">Marca</label>
+                    <input
+                      type="text"
+                      id="marcaItem"
+                      placeholder="Ej: MSA, Steelpro"
+                    />
+                  </div>
+
+                  <div class="field small">
+                    <label for="tallaItem">Talla</label>
+                    <input
+                      type="text"
+                      id="tallaItem"
+                      placeholder="M, L, XL, 42"
+                    />
+                  </div>
+
+                  <div class="field small">
+                    <label for="cantidadItem">Cantidad</label>
+                    <input
+                      type="number"
+                      id="cantidadItem"
+                      min="1"
+                      step="1"
+                      value="1"
+                      required
+                    />
+                  </div>
                 </div>
+
+                <div class="form-row" style="margin-top: 8px;">
+                  <div class="field">
+                    <label for="comentarioItem">Comentario (para retiros)</label>
+                    <input
+                      type="text"
+                      id="comentarioItem"
+                      placeholder="Ej: Entregado a Juan Pérez en faena"
+                    />
+                  </div>
+                </div>
+
+                <div class="actions-row">
+                  <div class="actions-left">
+                    <button type="submit" class="btn primary">
+                      + Guardar en inventario
+                    </button>
+                    <button type="button" id="btnRetiro" class="btn secondary">
+                      Registrar retiro
+                    </button>
+                  </div>
+                  <p class="hint">
+                    Los datos se guardan en este navegador (localmente). No se comparten automáticamente con otras personas.
+                  </p>
+                </div>
+              </form>
+
+              <!-- Importar Excel al inventario -->
+              <div class="excel-import">
+                <label for="excelFile"><strong>Importar desde Excel (masivo, opcional)</strong></label>
+                <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" />
                 <p class="hint">
-                  <strong>Nuevo:</strong> crea un ítem. |
-                  <strong>Existente:</strong> suma a uno que ya exista (mismo nombre, marca y talla).
+                  Usa un archivo donde la primera fila tenga las columnas
+                  <strong>Nombre</strong>, <strong>Marca</strong> (opcional),
+                  <strong>Talla</strong> (opcional) y <strong>Cantidad</strong>. Se sumará a lo que ya tengas cargado.
                 </p>
               </div>
-
-              <div class="field">
-                <label for="nombreItem">Nombre del ítem</label>
-                <input
-                  type="text"
-                  id="nombreItem"
-                  placeholder="Ej: Chaqueta térmica"
-                  required
-                />
-              </div>
-
-              <div class="field">
-                <label for="marcaItem">Marca</label>
-                <input
-                  type="text"
-                  id="marcaItem"
-                  placeholder="Ej: MSA, Steelpro"
-                />
-              </div>
-
-              <div class="field small">
-                <label for="tallaItem">Talla</label>
-                <input
-                  type="text"
-                  id="tallaItem"
-                  placeholder="M, L, XL, 42"
-                />
-              </div>
-
-              <div class="field small">
-                <label for="cantidadItem">Cantidad</label>
-                <input
-                  type="number"
-                  id="cantidadItem"
-                  min="1"
-                  step="1"
-                  value="1"
-                  required
-                />
-              </div>
             </div>
 
-            <div class="form-row" style="margin-top: 8px;">
-              <div class="field">
-                <label for="comentarioItem">Comentario (para retiros)</label>
-                <input
-                  type="text"
-                  id="comentarioItem"
-                  placeholder="Ej: Entregado a Juan Pérez en faena"
-                />
-              </div>
-            </div>
-
-            <div class="actions-row">
-              <div class="actions-left">
-                <button type="submit" class="btn primary">
-                  + Guardar en inventario
-                </button>
-                <button type="button" id="btnRetiro" class="btn secondary">
-                  Registrar retiro
-                </button>
+            <!-- Tabla inventario -->
+            <div class="card">
+              <h2>Inventario actual</h2>
+              <div class="table-wrapper">
+                <table id="tablaInventario">
+                  <thead>
+                    <tr>
+                      <th>Ítem</th>
+                      <th>Marca</th>
+                      <th>Talla</th>
+                      <th class="center">Cantidad</th>
+                      <th class="center">Ajustar</th>
+                      <th class="center">Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Filas dinámicas -->
+                  </tbody>
+                </table>
               </div>
               <p class="hint">
-                Los datos se guardan en este navegador (localmente). No se comparten automáticamente con otras personas.
+                Usa <strong>Editar</strong> para cambiar nombre, marca, talla o cantidad. <strong>- / +</strong> ajusta rápido y
+                <strong>Eliminar</strong> borra el ítem.
               </p>
             </div>
-          </form>
-
-          <!-- Importar Excel -->
-          <div class="excel-import">
-            <label for="excelFile"><strong>Importar desde Excel (masivo, opcional)</strong></label>
-            <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" />
-            <p class="hint">
-              Usa un archivo donde la primera fila tenga las columnas
-              <strong>Nombre</strong>, <strong>Marca</strong> (opcional),
-              <strong>Talla</strong> (opcional) y <strong>Cantidad</strong>. Se sumará a lo que ya tengas cargado.
-            </p>
           </div>
-        </div>
 
-        <!-- Tabla inventario -->
-        <div class="card">
-          <h2>Inventario actual</h2>
-          <div class="table-wrapper">
-            <table id="tablaInventario">
-              <thead>
-                <tr>
-                  <th>Ítem</th>
-                  <th>Marca</th>
-                  <th>Talla</th>
-                  <th class="center">Cantidad</th>
-                  <th class="center">Ajustar</th>
-                  <th class="center">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Filas dinámicas -->
-              </tbody>
-            </table>
+          <!-- Comentarios / Retiros -->
+          <div>
+            <div class="card">
+              <h2>Comentarios / Retiros</h2>
+
+              <div class="form-row" style="margin-top: 0; margin-bottom: 8px; align-items: flex-end;">
+                <div class="field">
+                  <label for="filtroComentarios">Filtrar por periodo</label>
+                  <select id="filtroComentarios">
+                    <option value="todo">Todo</option>
+                    <option value="hoy">Hoy</option>
+                    <option value="semana">Esta semana</option>
+                    <option value="mes">Este mes</option>
+                    <option value="anio">Este año</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>&nbsp;</label>
+                  <button type="button" id="btnDescargarComentarios" class="btn secondary">
+                    Descargar retiros
+                  </button>
+                </div>
+              </div>
+
+              <ul id="listaComentarios" class="comentarios-list">
+                <!-- Comentarios dinámicos -->
+              </ul>
+              <p id="comentariosVacios" class="comentario-vacio">
+                Aún no hay retiros registrados.
+              </p>
+              <p class="hint">
+                Cada vez que registres un <strong>Retiro</strong>, quedará guardado aquí como historial (texto en rojo).
+              </p>
+            </div>
           </div>
-          <p class="hint">
-            Usa <strong>Editar</strong> para cambiar nombre, marca, talla o cantidad. <strong>- / +</strong> ajusta rápido y
-            <strong>Eliminar</strong> borra el ítem.
-          </p>
         </div>
       </div>
 
-      <!-- Comentarios / Retiros -->
-      <div>
+      <!-- PESTAÑA 2: CHECK LIST DE PEDIDOS -->
+      <div id="tab-checklist-pedidos" class="tab-content">
         <div class="card">
-          <h2>Comentarios / Retiros</h2>
+          <h2 class="section-title">Check list de pedidos</h2>
+          <p class="section-subtitle">
+            Carga un archivo <strong>CSV</strong> con el pedido y marca si las cosas están o no.
+          </p>
+          <p class="small-muted">
+            👉 En Excel: <strong>Archivo &gt; Guardar como &gt; CSV</strong>.<br />
+            Debe tener, al menos, dos columnas: <strong>Nombre del ítem</strong> y <strong>Cantidad pedida</strong>.
+          </p>
 
-          <div class="form-row" style="margin-top: 0; margin-bottom: 8px; align-items: flex-end;">
-            <div class="field">
-              <label for="filtroComentarios">Filtrar por periodo</label>
-              <select id="filtroComentarios">
-                <option value="todo">Todo</option>
-                <option value="hoy">Hoy</option>
-                <option value="semana">Esta semana</option>
-                <option value="mes">Este mes</option>
-                <option value="anio">Este año</option>
-              </select>
-            </div>
-            <div class="field">
-              <label>&nbsp;</label>
-              <button type="button" id="btnDescargarComentarios" class="btn secondary">
-                Descargar retiros
-              </button>
-            </div>
+          <input type="file" id="pedidoFile" class="file-input" accept=".csv" />
+
+          <div class="table-wrapper" style="margin-top: 8px;">
+            <table class="table-simple">
+              <thead>
+                <tr>
+                  <th>Ítem</th>
+                  <th>Cantidad pedida</th>
+                  <th>¿Hay?</th>
+                  <th>Cantidad que hay</th>
+                  <th>Faltan</th>
+                </tr>
+              </thead>
+              <tbody id="pedidoTableBody">
+                <!-- Se llena automáticamente -->
+              </tbody>
+            </table>
           </div>
 
-          <ul id="listaComentarios" class="comentarios-list">
-            <!-- Comentarios dinámicos -->
-          </ul>
-          <p id="comentariosVacios" class="comentario-vacio">
-            Aún no hay retiros registrados.
+          <div style="margin-top: 10px;">
+            <button id="btnDescargarPedido" class="btn-primary-small">
+              Descargar resumen (CSV para Excel)
+            </button>
+            <span class="small-muted">
+              Exporta el detalle de lo que hay y lo que falta.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PESTAÑA 3: HERRAMIENTAS Y VEHÍCULOS -->
+      <div id="tab-estado-herramientas" class="tab-content">
+        <div class="card">
+          <h2 class="section-title">Estado de herramientas y vehículos</h2>
+          <p class="section-subtitle">
+            Marca si las herramientas o vehículos están
+            <span class="estado-badge estado-disponible">Disponibles</span> o
+            <span class="estado-badge estado-en-uso">En uso</span> y dónde se están utilizando.
           </p>
-          <p class="hint">
-            Cada vez que registres un <strong>Retiro</strong>, quedará guardado aquí como historial (texto en rojo).
-          </p>
+
+          <!-- HERRAMIENTAS -->
+          <div class="section-box">
+            <h3>Listado de herramientas</h3>
+            <form id="formHerramienta">
+              <label for="nombreHerramienta">Nombre herramienta:</label>
+              <input type="text" id="nombreHerramienta" placeholder="Ej: Taladro percutor" required />
+              <button type="submit" class="btn-primary-small">Agregar herramienta</button>
+            </form>
+            <div class="table-wrapper">
+              <table class="table-simple">
+                <thead>
+                  <tr>
+                    <th>Herramienta</th>
+                    <th>Estado</th>
+                    <th>Lugar de uso</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyHerramientas">
+                  <!-- Se llena por JS -->
+                </tbody>
+              </table>
+            </div>
+            <p class="small-muted">
+              Cuando una herramienta se vaya a ocupar, márcala como <strong>"En uso"</strong> e indica dónde se está usando.
+            </p>
+          </div>
+
+          <!-- VEHÍCULOS -->
+          <div class="section-box">
+            <h3>Listado de vehículos</h3>
+            <form id="formVehiculo">
+              <label for="nombreVehiculo">Vehículo:</label>
+              <input type="text" id="nombreVehiculo" placeholder="Ej: Camioneta HDM-123" required />
+              <button type="submit" class="btn-primary-small">Agregar vehículo</button>
+            </form>
+            <div class="table-wrapper">
+              <table class="table-simple">
+                <thead>
+                  <tr>
+                    <th>Vehículo</th>
+                    <th>Estado</th>
+                    <th>Lugar de uso</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyVehiculos">
+                  <!-- Se llena por JS -->
+                </tbody>
+              </table>
+            </div>
+            <p class="small-muted">
+              Marca cuándo un vehículo sale a terreno (<strong>"En uso"</strong>) y dónde está trabajando.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -557,7 +888,7 @@
 
   <script>
     // -----------------------------
-    // Estado y almacenamiento
+    // Estado y almacenamiento INVENTARIO
     // -----------------------------
     let inventario = [];
     let comentarios = [];
@@ -663,11 +994,11 @@
     }
 
     // -----------------------------
-    // Render tabla
+    // Render tabla inventario
     // -----------------------------
     function renderTabla() {
-      const tbody = document.querySelector("#tablaInventario tbody");
-      tbody.innerHTML = "";
+      const tbodyInv = document.querySelector("#tablaInventario tbody");
+      tbodyInv.innerHTML = "";
 
       if (!inventario.length) {
         const tr = document.createElement("tr");
@@ -676,7 +1007,7 @@
         td.className = "no-data";
         td.textContent = "No hay ítems en el inventario todavía.";
         tr.appendChild(td);
-        tbody.appendChild(tr);
+        tbodyInv.appendChild(tr);
         return;
       }
 
@@ -702,7 +1033,7 @@
           </td>
         `;
 
-        tbody.appendChild(tr);
+        tbodyInv.appendChild(tr);
       });
     }
 
@@ -882,9 +1213,9 @@
     // -----------------------------
     // Botones de la tabla (editar, eliminar, +/-)
     // -----------------------------
-    const tbody = document.querySelector("#tablaInventario tbody");
+    const tbodyInv = document.querySelector("#tablaInventario tbody");
 
-    tbody.addEventListener("click", (e) => {
+    tbodyInv.addEventListener("click", (e) => {
       const btn = e.target.closest("button");
       if (!btn) return;
 
@@ -944,7 +1275,7 @@
     });
 
     // -----------------------------
-    // Importar desde Excel
+    // Importar desde Excel al inventario
     // -----------------------------
     const excelInput = document.getElementById("excelFile");
 
@@ -1043,11 +1374,13 @@
         return;
       }
 
-      let contenido = "Fecha,Detalle\n";
+      let contenido = "Fecha,Detalle
+";
       filtrados.forEach((c) => {
         const fecha = (c.fecha || "").replace(/"/g, '""');
         const texto = (c.texto || "").replace(/"/g, '""');
-        contenido += `"${fecha}","${texto}"\n`;
+        contenido += `"${fecha}","${texto}"
+`;
       });
 
       const blob = new Blob([contenido], { type: "text/csv;charset=utf-8;" });
@@ -1063,10 +1396,520 @@
     });
 
     // -----------------------------
-    // Cambio de filtro
+    // Cambio de filtro de comentarios
     // -----------------------------
     const filtroComentariosSelect = document.getElementById("filtroComentarios");
     filtroComentariosSelect.addEventListener("change", renderComentarios);
+
+    // =============================
+    // NUEVO: LÓGICA DE LAS PESTAÑAS
+    // =============================
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabMap = {
+      "inventario-principal": document.getElementById("tab-inventario-principal"),
+      "checklist-pedidos": document.getElementById("tab-checklist-pedidos"),
+      "estado-herramientas": document.getElementById("tab-estado-herramientas"),
+    };
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-tab");
+        if (!target || !tabMap[target]) return;
+
+        tabButtons.forEach((b) => b.classList.remove("tab-active"));
+        Object.values(tabMap).forEach((el) =>
+          el.classList.remove("tab-content-active")
+        );
+
+        btn.classList.add("tab-active");
+        tabMap[target].classList.add("tab-content-active");
+      });
+    });
+
+    // =============================
+    // NUEVO: CHECK LIST DE PEDIDOS
+    // =============================
+    let pedidoActual = [];
+    const pedidoFileInput = document.getElementById("pedidoFile");
+    const pedidoTbody = document.getElementById("pedidoTableBody");
+    const btnDescargarPedido = document.getElementById("btnDescargarPedido");
+
+    if (pedidoFileInput && pedidoTbody) {
+      pedidoFileInput.addEventListener("change", manejarArchivoPedido);
+    }
+
+    if (btnDescargarPedido) {
+      btnDescargarPedido.addEventListener("click", descargarResumenPedido);
+    }
+
+    function manejarArchivoPedido(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (ev) {
+        const texto = ev.target.result;
+        parsearPedidoCSV(texto);
+      };
+      reader.readAsText(file, "UTF-8");
+    }
+
+    function parsearPedidoCSV(texto) {
+      pedidoActual = [];
+      pedidoTbody.innerHTML = "";
+
+      const lineas = texto
+        .split(/
+?
+/)
+        .map((l) => l.trim())
+        .filter((l) => l !== "");
+
+      lineas.forEach((linea, index) => {
+        // Soporta ; o , como separador
+        let partes = linea.split(";");
+        if (partes.length === 1) {
+          partes = linea.split(",");
+        }
+        if (partes.length < 2) return;
+
+        const nombre = partes[0].trim();
+        const cantidadStr = partes[1].trim().replace(",", ".");
+        const cantidad = Number(cantidadStr);
+
+        // Saltar encabezado si no es número
+        if (!nombre || isNaN(cantidad)) {
+          // Si es la primera línea es probable que sea encabezado
+          return;
+        }
+
+        pedidoActual.push({
+          nombre,
+          cantidadPedida: cantidad,
+          estado: null, // "ok" o "falta"
+          cantidadHay: 0,
+          cantidadFalta: cantidad,
+        });
+      });
+
+      renderPedidoTabla();
+    }
+
+    function renderPedidoTabla() {
+      pedidoTbody.innerHTML = "";
+
+      if (!pedidoActual.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 5;
+        td.className = "no-data";
+        td.textContent = "No se cargó ningún ítem. Revisa el archivo CSV.";
+        tr.appendChild(td);
+        pedidoTbody.appendChild(tr);
+        return;
+      }
+
+      pedidoActual.forEach((item, index) => {
+        const tr = document.createElement("tr");
+
+        const tdNombre = document.createElement("td");
+        tdNombre.textContent = item.nombre;
+
+        const tdCantPedida = document.createElement("td");
+        tdCantPedida.textContent = item.cantidadPedida;
+
+        const tdEstado = document.createElement("td");
+        const labelOk = document.createElement("label");
+        labelOk.className = "radio-badge";
+        const radioOk = document.createElement("input");
+        radioOk.type = "radio";
+        radioOk.name = "estado-" + index;
+        radioOk.value = "ok";
+        if (item.estado === "ok") radioOk.checked = true;
+        labelOk.appendChild(radioOk);
+        labelOk.append("✓");
+
+        const labelFalta = document.createElement("label");
+        labelFalta.className = "radio-badge";
+        const radioFalta = document.createElement("input");
+        radioFalta.type = "radio";
+        radioFalta.name = "estado-" + index;
+        radioFalta.value = "falta";
+        if (item.estado === "falta") radioFalta.checked = true;
+        labelFalta.appendChild(radioFalta);
+        labelFalta.append("X");
+
+        tdEstado.appendChild(labelOk);
+        tdEstado.appendChild(labelFalta);
+
+        const tdHay = document.createElement("td");
+        const inputHay = document.createElement("input");
+        inputHay.type = "number";
+        inputHay.min = "0";
+        inputHay.className = "input-number-small";
+        inputHay.value =
+          typeof item.cantidadHay === "number" ? item.cantidadHay : "";
+        tdHay.appendChild(inputHay);
+
+        const tdFaltan = document.createElement("td");
+        const inputFaltan = document.createElement("input");
+        inputFaltan.type = "number";
+        inputFaltan.readOnly = true;
+        inputFaltan.className = "input-number-small";
+        inputFaltan.value =
+          typeof item.cantidadFalta === "number"
+            ? item.cantidadFalta
+            : item.cantidadPedida;
+        tdFaltan.appendChild(inputFaltan);
+
+        tr.appendChild(tdNombre);
+        tr.appendChild(tdCantPedida);
+        tr.appendChild(tdEstado);
+        tr.appendChild(tdHay);
+        tr.appendChild(tdFaltan);
+
+        // Eventos
+        radioOk.addEventListener("change", () =>
+          cambiarEstadoPedido(index, "ok", inputHay, inputFaltan)
+        );
+        radioFalta.addEventListener("change", () =>
+          cambiarEstadoPedido(index, "falta", inputHay, inputFaltan)
+        );
+        inputHay.addEventListener("input", () =>
+          cambiarCantidadHay(index, inputHay, inputFaltan)
+        );
+
+        pedidoTbody.appendChild(tr);
+      });
+    }
+
+    function cambiarEstadoPedido(index, estado, inputHay, inputFaltan) {
+      const item = pedidoActual[index];
+      if (!item) return;
+      item.estado = estado;
+
+      if (estado === "ok") {
+        item.cantidadHay = item.cantidadPedida;
+        item.cantidadFalta = 0;
+        inputHay.value = item.cantidadPedida;
+        inputHay.readOnly = true;
+        inputFaltan.value = 0;
+      } else {
+        inputHay.readOnly = false;
+        const hay = Number(inputHay.value || 0);
+        const faltan = Math.max(0, item.cantidadPedida - hay);
+        item.cantidadHay = hay;
+        item.cantidadFalta = faltan;
+        inputFaltan.value = faltan;
+      }
+    }
+
+    function cambiarCantidadHay(index, inputHay, inputFaltan) {
+      const item = pedidoActual[index];
+      if (!item) return;
+      let hay = Number(inputHay.value || 0);
+      if (isNaN(hay) || hay < 0) hay = 0;
+      item.cantidadHay = hay;
+      const faltan = Math.max(0, item.cantidadPedida - hay);
+      item.cantidadFalta = faltan;
+      inputFaltan.value = faltan;
+    }
+
+    function descargarResumenPedido() {
+      if (!pedidoActual.length) {
+        alert("No hay ningún pedido cargado.");
+        return;
+      }
+
+      let csv = "Item;Cantidad pedida;Estado;Cantidad que hay;Faltan
+";
+
+      pedidoActual.forEach((item) => {
+        const estadoTexto =
+          item.estado === "ok"
+            ? "Hay todo"
+            : item.estado === "falta"
+            ? "Faltan"
+            : "";
+        const hay =
+          typeof item.cantidadHay === "number" ? item.cantidadHay : "";
+        const faltan =
+          typeof item.cantidadFalta === "number"
+            ? item.cantidadFalta
+            : Math.max(0, item.cantidadPedida - (hay || 0));
+
+        csv += `"${(item.nombre || "").replace(/"/g, '""')}";${
+          item.cantidadPedida
+        };${estadoTexto};${hay};${faltan}
+`;
+      });
+
+      const blob = new Blob([csv], {
+        type: "text/csv;charset=utf-8;",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "resumen_pedido.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // =============================
+    // NUEVO: HERRAMIENTAS Y VEHÍCULOS
+    // =============================
+    let herramientas = [];
+    let vehiculos = [];
+
+    const tbodyHerramientas = document.getElementById("tbodyHerramientas");
+    const tbodyVehiculos = document.getElementById("tbodyVehiculos");
+    const formHerramienta = document.getElementById("formHerramienta");
+    const formVehiculo = document.getElementById("formVehiculo");
+    const inputHerramienta = document.getElementById("nombreHerramienta");
+    const inputVehiculo = document.getElementById("nombreVehiculo");
+
+    const STORAGE_HERR = "hidro_herramientas";
+    const STORAGE_VEH = "hidro_vehiculos";
+
+    function cargarListadosHV() {
+      try {
+        const h = localStorage.getItem(STORAGE_HERR);
+        const v = localStorage.getItem(STORAGE_VEH);
+        herramientas = h ? JSON.parse(h) : [];
+        vehiculos = v ? JSON.parse(v) : [];
+      } catch (e) {
+        herramientas = [];
+        vehiculos = [];
+      }
+      renderHerramientas();
+      renderVehiculos();
+    }
+
+    function guardarListadosHV() {
+      try {
+        localStorage.setItem(STORAGE_HERR, JSON.stringify(herramientas));
+        localStorage.setItem(STORAGE_VEH, JSON.stringify(vehiculos));
+      } catch (e) {
+        console.warn("No se pudo guardar herramientas/vehículos en localStorage", e);
+      }
+    }
+
+    function renderHerramientas() {
+      if (!tbodyHerramientas) return;
+      tbodyHerramientas.innerHTML = "";
+      if (!herramientas.length) return;
+
+      herramientas.forEach((h, index) => {
+        const tr = document.createElement("tr");
+
+        const tdNombre = document.createElement("td");
+        tdNombre.textContent = h.nombre;
+
+        const tdEstado = document.createElement("td");
+        const spanEstado = document.createElement("span");
+        spanEstado.className =
+          "estado-badge " +
+          (h.estado === "en-uso" ? "estado-en-uso" : "estado-disponible");
+        spanEstado.textContent =
+          h.estado === "en-uso" ? "En uso" : "Disponible";
+        tdEstado.appendChild(spanEstado);
+
+        const tdLugar = document.createElement("td");
+        tdLugar.textContent = h.lugar || "";
+
+        const tdAcciones = document.createElement("td");
+
+        const btnEnUso = document.createElement("button");
+        btnEnUso.className = "btn-secondary-small";
+        btnEnUso.textContent = 'Marcar "En uso"';
+        btnEnUso.addEventListener("click", () =>
+          marcarHerramientaEnUso(index)
+        );
+
+        const btnDisponible = document.createElement("button");
+        btnDisponible.className = "btn-primary-small";
+        btnDisponible.textContent = 'Marcar "Disponible"';
+        btnDisponible.addEventListener("click", () =>
+          marcarHerramientaDisponible(index)
+        );
+
+        const btnEliminar = document.createElement("button");
+        btnEliminar.className = "btn-danger-small";
+        btnEliminar.textContent = "Eliminar";
+        btnEliminar.addEventListener("click", () =>
+          eliminarHerramienta(index)
+        );
+
+        tdAcciones.appendChild(btnEnUso);
+        tdAcciones.appendChild(btnDisponible);
+        tdAcciones.appendChild(btnEliminar);
+
+        tr.appendChild(tdNombre);
+        tr.appendChild(tdEstado);
+        tr.appendChild(tdLugar);
+        tr.appendChild(tdAcciones);
+
+        tbodyHerramientas.appendChild(tr);
+      });
+    }
+
+    function renderVehiculos() {
+      if (!tbodyVehiculos) return;
+      tbodyVehiculos.innerHTML = "";
+      if (!vehiculos.length) return;
+
+      vehiculos.forEach((v, index) => {
+        const tr = document.createElement("tr");
+
+        const tdNombre = document.createElement("td");
+        tdNombre.textContent = v.nombre;
+
+        const tdEstado = document.createElement("td");
+        const spanEstado = document.createElement("span");
+        spanEstado.className =
+          "estado-badge " +
+          (v.estado === "en-uso" ? "estado-en-uso" : "estado-disponible");
+        spanEstado.textContent =
+          v.estado === "en-uso" ? "En uso" : "Disponible";
+        tdEstado.appendChild(spanEstado);
+
+        const tdLugar = document.createElement("td");
+        tdLugar.textContent = v.lugar || "";
+
+        const tdAcciones = document.createElement("td");
+
+        const btnEnUso = document.createElement("button");
+        btnEnUso.className = "btn-secondary-small";
+        btnEnUso.textContent = 'Marcar "En uso"';
+        btnEnUso.addEventListener("click", () =>
+          marcarVehiculoEnUso(index)
+        );
+
+        const btnDisponible = document.createElement("button");
+        btnDisponible.className = "btn-primary-small";
+        btnDisponible.textContent = 'Marcar "Disponible"';
+        btnDisponible.addEventListener("click", () =>
+          marcarVehiculoDisponible(index)
+        );
+
+        const btnEliminar = document.createElement("button");
+        btnEliminar.className = "btn-danger-small";
+        btnEliminar.textContent = "Eliminar";
+        btnEliminar.addEventListener("click", () =>
+          eliminarVehiculo(index)
+        );
+
+        tdAcciones.appendChild(btnEnUso);
+        tdAcciones.appendChild(btnDisponible);
+        tdAcciones.appendChild(btnEliminar);
+
+        tr.appendChild(tdNombre);
+        tr.appendChild(tdEstado);
+        tr.appendChild(tdLugar);
+        tr.appendChild(tdAcciones);
+
+        tbodyVehiculos.appendChild(tr);
+      });
+    }
+
+    // --- Acciones herramientas ---
+    function marcarHerramientaEnUso(index) {
+      const h = herramientas[index];
+      if (!h) return;
+      const lugar = prompt(
+        "¿Dónde se está usando esta herramienta?
+(Ej: Bodega, Taller, Mina Gold Fields, etc.)",
+        h.lugar || ""
+      );
+      if (lugar === null) return;
+      h.estado = "en-uso";
+      h.lugar = lugar.trim();
+      guardarListadosHV();
+      renderHerramientas();
+    }
+
+    function marcarHerramientaDisponible(index) {
+      const h = herramientas[index];
+      if (!h) return;
+      h.estado = "disponible";
+      h.lugar = "";
+      guardarListadosHV();
+      renderHerramientas();
+    }
+
+    function eliminarHerramienta(index) {
+      if (!confirm("¿Eliminar esta herramienta del listado?")) return;
+      herramientas.splice(index, 1);
+      guardarListadosHV();
+      renderHerramientas();
+    }
+
+    // --- Acciones vehículos ---
+    function marcarVehiculoEnUso(index) {
+      const v = vehiculos[index];
+      if (!v) return;
+      const lugar = prompt(
+        "¿Dónde se está usando este vehículo?
+(Ej: Ruta a Gold Fields, Taller, En mantención, etc.)",
+        v.lugar || ""
+      );
+      if (lugar === null) return;
+      v.estado = "en-uso";
+      v.lugar = lugar.trim();
+      guardarListadosHV();
+      renderVehiculos();
+    }
+
+    function marcarVehiculoDisponible(index) {
+      const v = vehiculos[index];
+      if (!v) return;
+      v.estado = "disponible";
+      v.lugar = "";
+      guardarListadosHV();
+      renderVehiculos();
+    }
+
+    function eliminarVehiculo(index) {
+      if (!confirm("¿Eliminar este vehículo del listado?")) return;
+      vehiculos.splice(index, 1);
+      guardarListadosHV();
+      renderVehiculos();
+    }
+
+    // --- Formularios HV ---
+    if (formHerramienta && inputHerramienta) {
+      formHerramienta.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const nombre = inputHerramienta.value.trim();
+        if (!nombre) return;
+        herramientas.push({
+          nombre,
+          estado: "disponible",
+          lugar: "",
+        });
+        inputHerramienta.value = "";
+        guardarListadosHV();
+        renderHerramientas();
+      });
+    }
+
+    if (formVehiculo && inputVehiculo) {
+      formVehiculo.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const nombre = inputVehiculo.value.trim();
+        if (!nombre) return;
+        vehiculos.push({
+          nombre,
+          estado: "disponible",
+          lugar: "",
+        });
+        inputVehiculo.value = "";
+        guardarListadosHV();
+        renderVehiculos();
+      });
+    }
 
     // -----------------------------
     // Inicio
@@ -1074,6 +1917,7 @@
     cargarDesdeStorage();
     renderTabla();
     renderComentarios();
+    cargarListadosHV();
   </script>
 </body>
 </html>
