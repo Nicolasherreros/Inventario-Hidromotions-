@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -1048,6 +1049,12 @@
       });
     }
 
+    function formatearTipo(tipo) {
+      if (tipo === "herramienta") return "Herramienta";
+      if (tipo === "vehiculo") return "Vehículo";
+      return "EPP";
+    }
+
     // -----------------------------
     // Render comentarios
     // -----------------------------
@@ -1093,6 +1100,7 @@
     // -----------------------------
     // Agregar / actualizar ítems
     // -----------------------------
+
     const form = document.getElementById("itemForm");
 
     form.addEventListener("submit", (e) => {
@@ -1101,6 +1109,7 @@
       const tipoRegistro = document.querySelector('input[name="tipoRegistro"]:checked').value;
       const tipoItemSelect = document.getElementById("tipoItem");
       const tipoItem = tipoItemSelect ? tipoItemSelect.value : "epp";
+
       const nombreInput = document.getElementById("nombreItem");
       const marcaInput = document.getElementById("marcaItem");
       const tallaInput = document.getElementById("tallaItem");
@@ -1119,24 +1128,50 @@
       const existente = buscarItem(nombre, marca, talla);
 
       if (tipoRegistro === "nuevo") {
-        inventario.push({
+        const nuevoItem = {
           id: Date.now() + Math.random(),
           nombre,
           marca,
           talla,
           cantidad,
-        });
+          tipo: tipoItem,
+        };
+        inventario.push(nuevoItem);
+
+        if (tipoItem === "herramienta") {
+          agregarHerramientaDesdeInventario(nuevoItem);
+        } else if (tipoItem === "vehiculo") {
+          agregarVehiculoDesdeInventario(nuevoItem);
+        }
       } else if (tipoRegistro === "existente") {
         if (existente) {
           existente.cantidad += cantidad;
+
+          if (!existente.tipo) {
+            existente.tipo = tipoItem;
+          }
+
+          if (existente.tipo === "herramienta") {
+            agregarHerramientaDesdeInventario(existente);
+          } else if (existente.tipo === "vehiculo") {
+            agregarVehiculoDesdeInventario(existente);
+          }
         } else {
-          inventario.push({
+          const nuevoItem = {
             id: Date.now() + Math.random(),
             nombre,
             marca,
             talla,
             cantidad,
-          });
+            tipo: tipoItem,
+          };
+          inventario.push(nuevoItem);
+
+          if (tipoItem === "herramienta") {
+            agregarHerramientaDesdeInventario(nuevoItem);
+          } else if (tipoItem === "vehiculo") {
+            agregarVehiculoDesdeInventario(nuevoItem);
+          }
         }
       }
 
@@ -1347,6 +1382,9 @@
 
             if (existente) {
               existente.cantidad += cantidad;
+              if (!existente.tipo) {
+                existente.tipo = "epp";
+              }
             } else {
               inventario.push({
                 id: Date.now() + i + Math.random(),
@@ -1354,6 +1392,7 @@
                 marca: marcaStr,
                 talla: tallaStr,
                 cantidad,
+                tipo: "epp",
               });
             }
           }
