@@ -377,7 +377,7 @@
     }
 
     /* ======================
-       NUEVO: PESTAÑAS (TABS)
+       PESTAÑAS (TABS)
        ====================== */
 
     .tabs-container {
@@ -427,7 +427,7 @@
     }
 
     /* ======================
-       NUEVO: CHECK LIST PEDIDOS
+       CHECK LIST PEDIDOS
        ====================== */
 
     .section-title {
@@ -517,7 +517,7 @@
     }
 
     /* ======================
-       NUEVO: HERRAMIENTAS / VEHÍCULOS
+       HERRAMIENTAS / VEHÍCULOS
        ====================== */
 
     .estado-badge {
@@ -593,7 +593,7 @@
       <h1>Inventario Hidromotions</h1>
     </div>
 
-    <!-- NUEVO: CONTENEDOR DE PESTAÑAS -->
+    <!-- CONTENEDOR DE PESTAÑAS -->
     <div class="tabs-container">
       <div class="tabs-header">
         <button class="tab-btn tab-active" data-tab="inventario-principal">Inventario principal</button>
@@ -601,7 +601,7 @@
         <button class="tab-btn" data-tab="estado-herramientas">Herramientas y vehículos</button>
       </div>
 
-      <!-- PESTAÑA 1: INVENTARIO PRINCIPAL (TU PÁGINA ORIGINAL) -->
+      <!-- PESTAÑA 1: INVENTARIO PRINCIPAL -->
       <div id="tab-inventario-principal" class="tab-content tab-content-active">
         <div class="layout">
           <div>
@@ -624,6 +624,15 @@
                       <strong>Nuevo:</strong> crea un ítem. |
                       <strong>Existente:</strong> suma a uno que ya exista (mismo nombre, marca y talla).
                     </p>
+                  </div>
+
+                  <div class="field small">
+                    <label for="tipoItem">Tipo de ítem</label>
+                    <select id="tipoItem">
+                      <option value="epp" selected>EPP</option>
+                      <option value="herramienta">Herramienta</option>
+                      <option value="vehiculo">Vehículo</option>
+                    </select>
                   </div>
 
                   <div class="field">
@@ -715,6 +724,7 @@
                       <th>Ítem</th>
                       <th>Marca</th>
                       <th>Talla</th>
+                      <th>Tipo</th>
                       <th class="center">Cantidad</th>
                       <th class="center">Ajustar</th>
                       <th class="center">Acciones</th>
@@ -1003,7 +1013,7 @@
       if (!inventario.length) {
         const tr = document.createElement("tr");
         const td = document.createElement("td");
-        td.colSpan = 6;
+        td.colSpan = 7;
         td.className = "no-data";
         td.textContent = "No hay ítems en el inventario todavía.";
         tr.appendChild(td);
@@ -1022,6 +1032,7 @@
           <td>${item.nombre}</td>
           <td>${marca}</td>
           <td>${talla}</td>
+          <td>${formatearTipo(item.tipo)}</td>
           <td class="center">${item.cantidad}</td>
           <td class="center">
             <button class="btn-icon" data-action="decrease">-</button>
@@ -1087,7 +1098,9 @@
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const tipo = document.querySelector('input[name="tipoRegistro"]:checked').value;
+      const tipoRegistro = document.querySelector('input[name="tipoRegistro"]:checked').value;
+      const tipoItemSelect = document.getElementById("tipoItem");
+      const tipoItem = tipoItemSelect ? tipoItemSelect.value : "epp";
       const nombreInput = document.getElementById("nombreItem");
       const marcaInput = document.getElementById("marcaItem");
       const tallaInput = document.getElementById("tallaItem");
@@ -1105,8 +1118,7 @@
 
       const existente = buscarItem(nombre, marca, talla);
 
-      if (tipo === "nuevo") {
-        // Siempre crea un ítem nuevo
+      if (tipoRegistro === "nuevo") {
         inventario.push({
           id: Date.now() + Math.random(),
           nombre,
@@ -1114,11 +1126,10 @@
           talla,
           cantidad,
         });
-      } else if (tipo === "existente") {
+      } else if (tipoRegistro === "existente") {
         if (existente) {
           existente.cantidad += cantidad;
         } else {
-          // Si marca existente pero no se encontró, lo creamos igual para no perder el dato
           inventario.push({
             id: Date.now() + Math.random(),
             nombre,
@@ -1132,7 +1143,6 @@
       guardarInventario();
       renderTabla();
 
-      // Limpiar un poco el formulario (menos marca/talla por si repite)
       cantidadInput.value = 1;
       nombreInput.value = "";
       nombreInput.focus();
@@ -1195,7 +1205,6 @@
         texto: detalle,
       });
 
-      // Limitar historial a 200 por si acaso
       if (comentarios.length > 200) {
         comentarios = comentarios.slice(0, 200);
       }
@@ -1205,7 +1214,6 @@
       renderTabla();
       renderComentarios();
 
-      // No borramos nombre/marca/talla para poder seguir retirando parecido
       cantidadInput.value = 1;
       comentarioInput.value = "";
     });
@@ -1374,13 +1382,11 @@
         return;
       }
 
-      let contenido = "Fecha,Detalle
-";
+      let contenido = "Fecha,Detalle\n";
       filtrados.forEach((c) => {
         const fecha = (c.fecha || "").replace(/"/g, '""');
         const texto = (c.texto || "").replace(/"/g, '""');
-        contenido += `"${fecha}","${texto}"
-`;
+        contenido += `"${fecha}","${texto}"\n`;
       });
 
       const blob = new Blob([contenido], { type: "text/csv;charset=utf-8;" });
@@ -1402,32 +1408,39 @@
     filtroComentariosSelect.addEventListener("change", renderComentarios);
 
     // =============================
-    // NUEVO: LÓGICA DE LAS PESTAÑAS
+    // PESTAÑAS: LÓGICA SIMPLE
     // =============================
     const tabButtons = document.querySelectorAll(".tab-btn");
-    const tabMap = {
-      "inventario-principal": document.getElementById("tab-inventario-principal"),
-      "checklist-pedidos": document.getElementById("tab-checklist-pedidos"),
-      "estado-herramientas": document.getElementById("tab-estado-herramientas"),
-    };
 
-    tabButtons.forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const target = btn.getAttribute("data-tab");
-        if (!target || !tabMap[target]) return;
+    tabButtons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const target = this.getAttribute("data-tab"); // inventario-principal, checklist-pedidos, estado-herramientas
+        if (!target) return;
 
-        tabButtons.forEach((b) => b.classList.remove("tab-active"));
-        Object.values(tabMap).forEach((el) =>
-          el.classList.remove("tab-content-active")
-        );
+        // Quitar activo a todos los botones
+        tabButtons.forEach(function (b) {
+          b.classList.remove("tab-active");
+        });
 
-        btn.classList.add("tab-active");
-        tabMap[target].classList.add("tab-content-active");
+        // Ocultar todos los contenidos
+        const allContents = document.querySelectorAll(".tab-content");
+        allContents.forEach(function (c) {
+          c.classList.remove("tab-content-active");
+        });
+
+        // Activar botón actual
+        this.classList.add("tab-active");
+
+        // Mostrar el contenido correspondiente
+        const content = document.getElementById("tab-" + target);
+        if (content) {
+          content.classList.add("tab-content-active");
+        }
       });
     });
 
     // =============================
-    // NUEVO: CHECK LIST DE PEDIDOS
+    // CHECK LIST DE PEDIDOS
     // =============================
     let pedidoActual = [];
     const pedidoFileInput = document.getElementById("pedidoFile");
@@ -1459,14 +1472,11 @@
       pedidoTbody.innerHTML = "";
 
       const lineas = texto
-        .split(/
-?
-/)
+        .split(/\r?\n/)
         .map((l) => l.trim())
         .filter((l) => l !== "");
 
       lineas.forEach((linea, index) => {
-        // Soporta ; o , como separador
         let partes = linea.split(";");
         if (partes.length === 1) {
           partes = linea.split(",");
@@ -1477,16 +1487,14 @@
         const cantidadStr = partes[1].trim().replace(",", ".");
         const cantidad = Number(cantidadStr);
 
-        // Saltar encabezado si no es número
         if (!nombre || isNaN(cantidad)) {
-          // Si es la primera línea es probable que sea encabezado
           return;
         }
 
         pedidoActual.push({
           nombre,
           cantidadPedida: cantidad,
-          estado: null, // "ok" o "falta"
+          estado: null,
           cantidadHay: 0,
           cantidadFalta: cantidad,
         });
@@ -1568,7 +1576,6 @@
         tr.appendChild(tdHay);
         tr.appendChild(tdFaltan);
 
-        // Eventos
         radioOk.addEventListener("change", () =>
           cambiarEstadoPedido(index, "ok", inputHay, inputFaltan)
         );
@@ -1621,8 +1628,7 @@
         return;
       }
 
-      let csv = "Item;Cantidad pedida;Estado;Cantidad que hay;Faltan
-";
+      let csv = "Item;Cantidad pedida;Estado;Cantidad que hay;Faltan\n";
 
       pedidoActual.forEach((item) => {
         const estadoTexto =
@@ -1638,10 +1644,7 @@
             ? item.cantidadFalta
             : Math.max(0, item.cantidadPedida - (hay || 0));
 
-        csv += `"${(item.nombre || "").replace(/"/g, '""')}";${
-          item.cantidadPedida
-        };${estadoTexto};${hay};${faltan}
-`;
+        csv += `"${(item.nombre || "").replace(/"/g, '""')}";${item.cantidadPedida};${estadoTexto};${hay};${faltan}\n`;
       });
 
       const blob = new Blob([csv], {
@@ -1658,7 +1661,7 @@
     }
 
     // =============================
-    // NUEVO: HERRAMIENTAS Y VEHÍCULOS
+    // HERRAMIENTAS Y VEHÍCULOS
     // =============================
     let herramientas = [];
     let vehiculos = [];
@@ -1694,6 +1697,26 @@
       } catch (e) {
         console.warn("No se pudo guardar herramientas/vehículos en localStorage", e);
       }
+    }
+
+    function agregarHerramientaDesdeInventario(item) {
+      if (!item || !item.nombre) return;
+      const nombre = item.nombre.toLowerCase();
+      const existe = herramientas.find((h) => h.nombre.toLowerCase() === nombre);
+      if (existe) return;
+      herramientas.push({ nombre: item.nombre, estado: "disponible", lugar: "" });
+      guardarListadosHV();
+      renderHerramientas();
+    }
+
+    function agregarVehiculoDesdeInventario(item) {
+      if (!item || !item.nombre) return;
+      const nombre = item.nombre.toLowerCase();
+      const existe = vehiculos.find((v) => v.nombre.toLowerCase() === nombre);
+      if (existe) return;
+      vehiculos.push({ nombre: item.nombre, estado: "disponible", lugar: "" });
+      guardarListadosHV();
+      renderVehiculos();
     }
 
     function renderHerramientas() {
@@ -1819,8 +1842,7 @@
       const h = herramientas[index];
       if (!h) return;
       const lugar = prompt(
-        "¿Dónde se está usando esta herramienta?
-(Ej: Bodega, Taller, Mina Gold Fields, etc.)",
+        "¿Dónde se está usando esta herramienta?\n(Ej: Bodega, Taller, Mina Gold Fields, etc.)",
         h.lugar || ""
       );
       if (lugar === null) return;
@@ -1851,8 +1873,7 @@
       const v = vehiculos[index];
       if (!v) return;
       const lugar = prompt(
-        "¿Dónde se está usando este vehículo?
-(Ej: Ruta a Gold Fields, Taller, En mantención, etc.)",
+        "¿Dónde se está usando este vehículo?\n(Ej: Ruta a Gold Fields, Taller, En mantención, etc.)",
         v.lugar || ""
       );
       if (lugar === null) return;
