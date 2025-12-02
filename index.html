@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -148,7 +147,7 @@
     }
 
     .btn.primary {
-      background: #2563eb;
+      background: var(--primary);
       color: #fff;
       box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
     }
@@ -169,7 +168,7 @@
 
     .btn.danger {
       background: #fee2e2;
-      color: #dc2626;
+      color: var(--danger);
     }
 
     .btn.danger:hover {
@@ -213,7 +212,7 @@
 
     .hint {
       font-size: 0.8rem;
-      color: #6b7280;
+      color: var(--muted);
       margin-top: 4px;
     }
 
@@ -227,7 +226,7 @@
     .toggle-group {
       display: inline-flex;
       padding: 4px;
-      background: #eff6ff;
+      background: var(--primary-soft);
       border-radius: 999px;
       border: 1px solid rgba(37, 99, 235, 0.15);
       gap: 4px;
@@ -249,7 +248,7 @@
     }
 
     .toggle-group input[type="radio"]:checked + label {
-      background: #2563eb;
+      background: var(--primary);
       color: #ffffff;
       box-shadow: 0 6px 14px rgba(37, 99, 235, 0.4);
     }
@@ -259,7 +258,7 @@
       width: 100%;
       overflow-x: auto;
       border-radius: 16px;
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--border);
       background: #f9fafb;
     }
 
@@ -278,7 +277,7 @@
     th,
     td {
       padding: 8px 10px;
-      border-bottom: 1px solid #e5e7eb;
+      border-bottom: 1px solid var(--border);
     }
 
     th {
@@ -311,14 +310,14 @@
       text-align: center;
       padding: 10px;
       font-size: 0.85rem;
-      color: #6b7280;
+      color: var(--muted);
     }
 
     /* Importar Excel */
     .excel-import {
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px dashed #e5e7eb;
+      border-top: 1px dashed var(--border);
     }
 
     input[type="file"] {
@@ -339,7 +338,7 @@
 
     .comentario-item {
       font-size: 0.85rem;
-      color: #b91c1c;
+      color: var(--comentario);
     }
 
     .comentario-item span.fecha {
@@ -349,14 +348,14 @@
 
     .comentario-vacio {
       font-size: 0.85rem;
-      color: #6b7280;
+      color: var(--muted);
     }
 
     .footer {
       margin: 12px auto 0;
       max-width: 1100px;
       font-size: 0.78rem;
-      color: #6b7280;
+      color: var(--muted);
       text-align: center;
     }
 
@@ -378,9 +377,8 @@
     }
 
     /* ======================
-       PESTAÑAS (TABS)
+       TABS
        ====================== */
-
     .tabs-container {
       margin-top: 8px;
     }
@@ -407,30 +405,32 @@
     }
 
     .tab-btn.tab-active {
-      background: #2563eb;
+      background: var(--primary);
       color: #ffffff;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
       transform: translateY(-1px);
     }
 
-    .tab-btn:active {
-      transform: translateY(1px);
-      box-shadow: none;
-    }
-
     .tab-content {
       display: none;
-      padding: 8px 0 0 0;
     }
 
     .tab-content.tab-content-active {
       display: block;
     }
 
-    /* ======================
-       CHECK LIST PEDIDOS
-       ====================== */
+    @media (max-width: 640px) {
+      .tabs-header {
+        flex-direction: column;
+      }
 
+      .tab-btn {
+        flex: none;
+        width: 100%;
+      }
+    }
+
+    /* CHECKLIST */
     .section-title {
       font-size: 1.1rem;
       font-weight: 700;
@@ -439,17 +439,13 @@
 
     .section-subtitle {
       font-size: 0.9rem;
-      color: #6b7280;
+      color: var(--muted);
       margin-bottom: 8px;
     }
 
     .small-muted {
       font-size: 0.8rem;
-      color: #6b7280;
-    }
-
-    .file-input {
-      margin: 6px 0 10px;
+      color: var(--muted);
     }
 
     .table-simple {
@@ -460,14 +456,13 @@
 
     .table-simple th,
     .table-simple td {
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--border);
       padding: 6px 8px;
       text-align: left;
     }
 
     .table-simple th {
       background: #eff6ff;
-      font-weight: 600;
     }
 
     .radio-badge {
@@ -479,7 +474,7 @@
     }
 
     .radio-badge input {
-      accent-color: #2563eb;
+      accent-color: var(--primary);
     }
 
     .input-number-small {
@@ -487,7 +482,7 @@
       padding: 4px 6px;
       font-size: 0.8rem;
       border-radius: 8px;
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--border);
     }
 
     .btn-primary-small,
@@ -503,7 +498,7 @@
     }
 
     .btn-primary-small {
-      background: #2563eb;
+      background: var(--primary);
       color: #ffffff;
     }
 
@@ -513,14 +508,11 @@
     }
 
     .btn-danger-small {
-      background: #dc2626;
+      background: var(--danger);
       color: #ffffff;
     }
 
-    /* ======================
-       HERRAMIENTAS / VEHÍCULOS
-       ====================== */
-
+    /* HERRAMIENTAS / VEHÍCULOS */
     .estado-badge {
       display: inline-block;
       padding: 2px 10px;
@@ -544,7 +536,7 @@
       padding: 10px;
       border-radius: 12px;
       background: #f9fafb;
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--border);
     }
 
     .section-box h3 {
@@ -566,24 +558,13 @@
       min-width: 180px;
       padding: 6px 10px;
       border-radius: 999px;
-      border: 1px solid #e5e7eb;
+      border: 1px solid var(--border);
       font-size: 0.85rem;
     }
 
     .section-box label {
       font-size: 0.8rem;
-      color: #6b7280;
-    }
-
-    @media (max-width: 640px) {
-      .tabs-header {
-        flex-direction: column;
-      }
-
-      .tab-btn {
-        flex: none;
-        width: 100%;
-      }
+      color: var(--muted);
     }
   </style>
 </head>
@@ -594,19 +575,17 @@
       <h1>Inventario Hidromotions</h1>
     </div>
 
-    <!-- CONTENEDOR DE PESTAÑAS -->
     <div class="tabs-container">
       <div class="tabs-header">
-        <button class="tab-btn tab-active" data-tab="inventario-principal">Inventario principal</button>
-        <button class="tab-btn" data-tab="checklist-pedidos">Check list de pedidos</button>
-        <button class="tab-btn" data-tab="estado-herramientas">Herramientas y vehículos</button>
+        <button class="tab-btn tab-active" data-tab="inventario">Inventario principal</button>
+        <button class="tab-btn" data-tab="checklist">Check list de pedidos</button>
+        <button class="tab-btn" data-tab="estado">Herramientas y vehículos</button>
       </div>
 
-      <!-- PESTAÑA 1: INVENTARIO PRINCIPAL -->
-      <div id="tab-inventario-principal" class="tab-content tab-content-active">
+      <!-- TAB 1: INVENTARIO -->
+      <div id="tab-inventario" class="tab-content tab-content-active">
         <div class="layout">
           <div>
-            <!-- Formulario para agregar / actualizar ítems -->
             <div class="card">
               <h2>Agregar o actualizar ítem</h2>
 
@@ -703,7 +682,6 @@
                 </div>
               </form>
 
-              <!-- Importar Excel al inventario -->
               <div class="excel-import">
                 <label for="excelFile"><strong>Importar desde Excel (masivo, opcional)</strong></label>
                 <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" />
@@ -715,9 +693,17 @@
               </div>
             </div>
 
-            <!-- Tabla inventario -->
             <div class="card">
               <h2>Inventario actual</h2>
+              <div class="actions-row" style="margin-top: 4px;">
+                <div class="actions-left">
+                  <input
+                    type="text"
+                    id="buscadorInventario"
+                    placeholder="Buscar por nombre, marca, talla o tipo..."
+                  />
+                </div>
+              </div>
               <div class="table-wrapper">
                 <table id="tablaInventario">
                   <thead>
@@ -732,7 +718,6 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <!-- Filas dinámicas -->
                   </tbody>
                 </table>
               </div>
@@ -743,7 +728,6 @@
             </div>
           </div>
 
-          <!-- Comentarios / Retiros -->
           <div>
             <div class="card">
               <h2>Comentarios / Retiros</h2>
@@ -767,9 +751,7 @@
                 </div>
               </div>
 
-              <ul id="listaComentarios" class="comentarios-list">
-                <!-- Comentarios dinámicos -->
-              </ul>
+              <ul id="listaComentarios" class="comentarios-list"></ul>
               <p id="comentariosVacios" class="comentario-vacio">
                 Aún no hay retiros registrados.
               </p>
@@ -781,19 +763,19 @@
         </div>
       </div>
 
-      <!-- PESTAÑA 2: CHECK LIST DE PEDIDOS -->
-      <div id="tab-checklist-pedidos" class="tab-content">
+      <!-- TAB 2: CHECKLIST -->
+      <div id="tab-checklist" class="tab-content">
         <div class="card">
           <h2 class="section-title">Check list de pedidos</h2>
           <p class="section-subtitle">
             Carga un archivo <strong>CSV</strong> con el pedido y marca si las cosas están o no.
           </p>
           <p class="small-muted">
-            👉 En Excel: <strong>Archivo &gt; Guardar como &gt; CSV</strong>.<br />
-            Debe tener, al menos, dos columnas: <strong>Nombre del ítem</strong> y <strong>Cantidad pedida</strong>.
+            En Excel: <strong>Archivo &gt; Guardar como &gt; CSV</strong>.<br />
+            Debe tener, al menos, dos columnas: <strong>Nombre</strong> y <strong>Cantidad</strong>.
           </p>
 
-          <input type="file" id="pedidoFile" class="file-input" accept=".csv" />
+          <input type="file" id="pedidoFile" accept=".csv" />
 
           <div class="table-wrapper" style="margin-top: 8px;">
             <table class="table-simple">
@@ -806,25 +788,26 @@
                   <th>Faltan</th>
                 </tr>
               </thead>
-              <tbody id="pedidoTableBody">
-                <!-- Se llena automáticamente -->
-              </tbody>
+              <tbody id="pedidoTableBody"></tbody>
             </table>
           </div>
 
-          <div style="margin-top: 10px;">
+          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
             <button id="btnDescargarPedido" class="btn-primary-small">
               Descargar resumen (CSV para Excel)
             </button>
+            <button id="btnEliminarPedido" class="btn-danger-small">
+              Eliminar listado
+            </button>
             <span class="small-muted">
-              Exporta el detalle de lo que hay y lo que falta.
+              Exporta el detalle de lo que hay y lo que falta, o elimina completamente el listado cargado.
             </span>
           </div>
         </div>
       </div>
 
-      <!-- PESTAÑA 3: HERRAMIENTAS Y VEHÍCULOS -->
-      <div id="tab-estado-herramientas" class="tab-content">
+      <!-- TAB 3: HERRAMIENTAS / VEHICULOS -->
+      <div id="tab-estado" class="tab-content">
         <div class="card">
           <h2 class="section-title">Estado de herramientas y vehículos</h2>
           <p class="section-subtitle">
@@ -833,7 +816,6 @@
             <span class="estado-badge estado-en-uso">En uso</span> y dónde se están utilizando.
           </p>
 
-          <!-- HERRAMIENTAS -->
           <div class="section-box">
             <h3>Listado de herramientas</h3>
             <form id="formHerramienta">
@@ -851,17 +833,11 @@
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody id="tbodyHerramientas">
-                  <!-- Se llena por JS -->
-                </tbody>
+                <tbody id="tbodyHerramientas"></tbody>
               </table>
             </div>
-            <p class="small-muted">
-              Cuando una herramienta se vaya a ocupar, márcala como <strong>"En uso"</strong> e indica dónde se está usando.
-            </p>
           </div>
 
-          <!-- VEHÍCULOS -->
           <div class="section-box">
             <h3>Listado de vehículos</h3>
             <form id="formVehiculo">
@@ -875,18 +851,13 @@
                   <tr>
                     <th>Vehículo</th>
                     <th>Estado</th>
-                    <th>Lugar de uso</th>
+                    <th>Rumbo / Lugar de uso</th>
                     <th>Acciones</th>
                   </tr>
                 </thead>
-                <tbody id="tbodyVehiculos">
-                  <!-- Se llena por JS -->
-                </tbody>
+                <tbody id="tbodyVehiculos"></tbody>
               </table>
             </div>
-            <p class="small-muted">
-              Marca cuándo un vehículo sale a terreno (<strong>"En uso"</strong>) y dónde está trabajando.
-            </p>
           </div>
         </div>
       </div>
@@ -898,9 +869,7 @@
   </div>
 
   <script>
-    // -----------------------------
-    // Estado y almacenamiento INVENTARIO
-    // -----------------------------
+    // --------- ESTADO INVENTARIO / COMENTARIOS ---------
     let inventario = [];
     let comentarios = [];
 
@@ -908,14 +877,19 @@
       try {
         const data = localStorage.getItem("inventarioHidromotions");
         inventario = data ? JSON.parse(data) : [];
-      } catch (e) {
+      } catch {
         inventario = [];
       }
+
+      // Asegurar que todos tengan tipo (si vienen de versiones anteriores)
+      inventario.forEach((item) => {
+        if (!item.tipo) item.tipo = "epp";
+      });
 
       try {
         const dataComentarios = localStorage.getItem("inventarioHidromotionsComentarios");
         comentarios = dataComentarios ? JSON.parse(dataComentarios) : [];
-      } catch (e) {
+      } catch {
         comentarios = [];
       }
     }
@@ -928,9 +902,7 @@
       localStorage.setItem("inventarioHidromotionsComentarios", JSON.stringify(comentarios));
     }
 
-    // -----------------------------
-    // Helpers de fechas para filtros
-    // -----------------------------
+    // --------- FECHAS COMENTARIOS ---------
     function obtenerFechaComentario(c) {
       if (c.timestamp) {
         const d = new Date(c.timestamp);
@@ -942,16 +914,13 @@
     }
 
     function esMismoDia(a, b) {
-      return (
-        a.getFullYear() === b.getFullYear() &&
-        a.getMonth() === b.getMonth() &&
-        a.getDate() === b.getDate()
-      );
+      return a.getFullYear() === b.getFullYear() &&
+             a.getMonth() === b.getMonth() &&
+             a.getDate() === b.getDate();
     }
 
     function esMismaSemana(a, b) {
-      // Semana con inicio lunes
-      const diaSemana = b.getDay(); // 0 domingo, 1 lunes...
+      const diaSemana = b.getDay();
       const diffAlLunes = (diaSemana + 6) % 7;
       const inicioSemana = new Date(b);
       inicioSemana.setHours(0, 0, 0, 0);
@@ -964,10 +933,8 @@
     }
 
     function esMismoMes(a, b) {
-      return (
-        a.getFullYear() === b.getFullYear() &&
-        a.getMonth() === b.getMonth()
-      );
+      return a.getFullYear() === b.getFullYear() &&
+             a.getMonth() === b.getMonth();
     }
 
     function esMismoAnio(a, b) {
@@ -984,45 +951,59 @@
 
       return comentarios.filter((c) => {
         const fechaC = obtenerFechaComentario(c);
-        if (!fechaC) {
-          // Si no se pudo interpretar, solo mostrar en "todo"
-          return false;
-        }
-        if (filtro === "hoy") {
-          return esMismoDia(fechaC, ahora);
-        }
-        if (filtro === "semana") {
-          return esMismaSemana(fechaC, ahora);
-        }
-        if (filtro === "mes") {
-          return esMismoMes(fechaC, ahora);
-        }
-        if (filtro === "anio") {
-          return esMismoAnio(fechaC, ahora);
-        }
+        if (!fechaC) return false;
+        if (filtro === "hoy") return esMismoDia(fechaC, ahora);
+        if (filtro === "semana") return esMismaSemana(fechaC, ahora);
+        if (filtro === "mes") return esMismoMes(fechaC, ahora);
+        if (filtro === "anio") return esMismoAnio(fechaC, ahora);
         return true;
       });
     }
 
-    // -----------------------------
-    // Render tabla inventario
-    // -----------------------------
-    function renderTabla() {
-      const tbodyInv = document.querySelector("#tablaInventario tbody");
-      tbodyInv.innerHTML = "";
+    // --------- RENDER TABLA INVENTARIO ---------
+    function formatearTipo(tipo) {
+      if (tipo === "herramienta") return "Herramienta";
+      if (tipo === "vehiculo") return "Vehículo";
+      return "EPP";
+    }
 
-      if (!inventario.length) {
+    function renderTabla() {
+      const tbody = document.querySelector("#tablaInventario tbody");
+      tbody.innerHTML = "";
+
+      let texto = "";
+      const inputBuscador = document.getElementById("buscadorInventario");
+      if (inputBuscador) {
+        texto = inputBuscador.value.toLowerCase().trim();
+      }
+
+      const listaFiltrada = inventario.filter((item) => {
+        if (!texto) return true;
+        const cadena = [
+          item.nombre || "",
+          item.marca || "",
+          item.talla || "",
+          formatearTipo(item.tipo || "epp"),
+        ]
+          .join(" ")
+          .toLowerCase();
+        return cadena.includes(texto);
+      });
+
+      if (!listaFiltrada.length) {
         const tr = document.createElement("tr");
         const td = document.createElement("td");
         td.colSpan = 7;
         td.className = "no-data";
-        td.textContent = "No hay ítems en el inventario todavía.";
+        td.textContent = texto
+          ? "No se encontraron ítems que coincidan con la búsqueda."
+          : "No hay ítems en el inventario todavía.";
         tr.appendChild(td);
-        tbodyInv.appendChild(tr);
+        tbody.appendChild(tr);
         return;
       }
 
-      inventario.forEach((item) => {
+      listaFiltrada.forEach((item) => {
         const tr = document.createElement("tr");
         tr.dataset.id = item.id;
 
@@ -1045,19 +1026,11 @@
           </td>
         `;
 
-        tbodyInv.appendChild(tr);
+        tbody.appendChild(tr);
       });
     }
 
-    function formatearTipo(tipo) {
-      if (tipo === "herramienta") return "Herramienta";
-      if (tipo === "vehiculo") return "Vehículo";
-      return "EPP";
-    }
-
-    // -----------------------------
-    // Render comentarios
-    // -----------------------------
+    // --------- RENDER COMENTARIOS ---------
     function renderComentarios() {
       const lista = document.getElementById("listaComentarios");
       const vacio = document.getElementById("comentariosVacios");
@@ -1081,9 +1054,7 @@
       });
     }
 
-    // -----------------------------
-    // Utilidad: buscar ítem por nombre+marca+talla
-    // -----------------------------
+    // --------- BUSCAR ITEM ---------
     function buscarItem(nombre, marca, talla) {
       const n = nombre.toLowerCase();
       const m = (marca || "").toLowerCase();
@@ -1097,18 +1068,14 @@
       );
     }
 
-    // -----------------------------
-    // Agregar / actualizar ítems
-    // -----------------------------
-
+    // --------- FORM INVENTARIO ---------
     const form = document.getElementById("itemForm");
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
       const tipoRegistro = document.querySelector('input[name="tipoRegistro"]:checked').value;
-      const tipoItemSelect = document.getElementById("tipoItem");
-      const tipoItem = tipoItemSelect ? tipoItemSelect.value : "epp";
+      const tipoItem = document.getElementById("tipoItem").value;
 
       const nombreInput = document.getElementById("nombreItem");
       const marcaInput = document.getElementById("marcaItem");
@@ -1143,17 +1110,15 @@
         } else if (tipoItem === "vehiculo") {
           agregarVehiculoDesdeInventario(nuevoItem);
         }
-      } else if (tipoRegistro === "existente") {
+
+      } else {
         if (existente) {
           existente.cantidad += cantidad;
+          if (!existente.tipo) existente.tipo = tipoItem;
 
-          if (!existente.tipo) {
-            existente.tipo = tipoItem;
-          }
-
-          if (existente.tipo === "herramienta") {
+          if (existente.tipo === "herramienta" || tipoItem === "herramienta") {
             agregarHerramientaDesdeInventario(existente);
-          } else if (existente.tipo === "vehiculo") {
+          } else if (existente.tipo === "vehiculo" || tipoItem === "vehiculo") {
             agregarVehiculoDesdeInventario(existente);
           }
         } else {
@@ -1183,9 +1148,7 @@
       nombreInput.focus();
     });
 
-    // -----------------------------
-    // Registrar retiro
-    // -----------------------------
+    // --------- REGISTRAR RETIRO ---------
     const btnRetiro = document.getElementById("btnRetiro");
 
     btnRetiro.addEventListener("click", () => {
@@ -1253,9 +1216,7 @@
       comentarioInput.value = "";
     });
 
-    // -----------------------------
-    // Botones de la tabla (editar, eliminar, +/-)
-    // -----------------------------
+    // --------- BOTONES TABLA INVENTARIO ---------
     const tbodyInv = document.querySelector("#tablaInventario tbody");
 
     tbodyInv.addEventListener("click", (e) => {
@@ -1273,9 +1234,7 @@
       if (action === "increase") {
         item.cantidad++;
       } else if (action === "decrease") {
-        if (item.cantidad > 0) {
-          item.cantidad--;
-        }
+        if (item.cantidad > 0) item.cantidad--;
       } else if (action === "edit") {
         const nuevoNombre = prompt("Nuevo nombre del ítem:", item.nombre);
         if (nuevoNombre !== null && nuevoNombre.trim() !== "") {
@@ -1290,6 +1249,17 @@
         const nuevaTalla = prompt("Nueva talla:", item.talla || "");
         if (nuevaTalla !== null) {
           item.talla = nuevaTalla.trim();
+        }
+
+        const nuevoTipo = prompt(
+          'Tipo de ítem (epp, herramienta, vehiculo):',
+          item.tipo || "epp"
+        );
+        if (nuevoTipo !== null && nuevoTipo.trim() !== "") {
+          const t = nuevoTipo.trim().toLowerCase();
+          if (["epp", "herramienta", "vehiculo"].includes(t)) {
+            item.tipo = t;
+          }
         }
 
         const nuevaCantidadStr = prompt(
@@ -1317,9 +1287,7 @@
       renderTabla();
     });
 
-    // -----------------------------
-    // Importar desde Excel al inventario
-    // -----------------------------
+    // --------- IMPORTAR DESDE EXCEL ---------
     const excelInput = document.getElementById("excelFile");
 
     excelInput.addEventListener("change", (e) => {
@@ -1378,13 +1346,12 @@
                 : "";
 
             const cantidad = parseInt(cantidadCruda, 10) || 0;
+            if (cantidad <= 0) continue;
+
             const existente = buscarItem(nombreStr, marcaStr, tallaStr);
 
             if (existente) {
               existente.cantidad += cantidad;
-              if (!existente.tipo) {
-                existente.tipo = "epp";
-              }
             } else {
               inventario.push({
                 id: Date.now() + i + Math.random(),
@@ -1392,7 +1359,7 @@
                 marca: marcaStr,
                 talla: tallaStr,
                 cantidad,
-                tipo: "epp",
+                tipo: "epp", // por defecto, lo que entra por Excel es EPP
               });
             }
           }
@@ -1409,9 +1376,7 @@
       reader.readAsArrayBuffer(file);
     });
 
-    // -----------------------------
-    // Descargar comentarios filtrados
-    // -----------------------------
+    // --------- DESCARGAR COMENTARIOS ---------
     const btnDescargarComentarios = document.getElementById("btnDescargarComentarios");
 
     btnDescargarComentarios.addEventListener("click", () => {
@@ -1440,71 +1405,34 @@
       URL.revokeObjectURL(url);
     });
 
-    // -----------------------------
-    // Cambio de filtro de comentarios
-    // -----------------------------
     const filtroComentariosSelect = document.getElementById("filtroComentarios");
     filtroComentariosSelect.addEventListener("change", renderComentarios);
 
-    // =============================
-    // PESTAÑAS: LÓGICA SIMPLE
-    // =============================
+    // --------- TABS ---------
     const tabButtons = document.querySelectorAll(".tab-btn");
 
-    tabButtons.forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        const target = this.getAttribute("data-tab"); // inventario-principal, checklist-pedidos, estado-herramientas
-        if (!target) return;
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const target = btn.getAttribute("data-tab");
 
-        // Quitar activo a todos los botones
-        tabButtons.forEach(function (b) {
-          b.classList.remove("tab-active");
-        });
+        tabButtons.forEach((b) => b.classList.remove("tab-active"));
+        btn.classList.add("tab-active");
 
-        // Ocultar todos los contenidos
-        const allContents = document.querySelectorAll(".tab-content");
-        allContents.forEach(function (c) {
+        document.querySelectorAll(".tab-content").forEach((c) => {
           c.classList.remove("tab-content-active");
         });
 
-        // Activar botón actual
-        this.classList.add("tab-active");
-
-        // Mostrar el contenido correspondiente
         const content = document.getElementById("tab-" + target);
-        if (content) {
-          content.classList.add("tab-content-active");
-        }
+        if (content) content.classList.add("tab-content-active");
       });
     });
 
-    // =============================
-    // CHECK LIST DE PEDIDOS
-    // =============================
+    // --------- CHECKLIST PEDIDOS ---------
     let pedidoActual = [];
     const pedidoFileInput = document.getElementById("pedidoFile");
     const pedidoTbody = document.getElementById("pedidoTableBody");
     const btnDescargarPedido = document.getElementById("btnDescargarPedido");
-
-    if (pedidoFileInput && pedidoTbody) {
-      pedidoFileInput.addEventListener("change", manejarArchivoPedido);
-    }
-
-    if (btnDescargarPedido) {
-      btnDescargarPedido.addEventListener("click", descargarResumenPedido);
-    }
-
-    function manejarArchivoPedido(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function (ev) {
-        const texto = ev.target.result;
-        parsearPedidoCSV(texto);
-      };
-      reader.readAsText(file, "UTF-8");
-    }
+    const btnEliminarPedido = document.getElementById("btnEliminarPedido");
 
     function parsearPedidoCSV(texto) {
       pedidoActual = [];
@@ -1515,20 +1443,32 @@
         .map((l) => l.trim())
         .filter((l) => l !== "");
 
+      if (!lineas.length) {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        td.colSpan = 5;
+        td.className = "no-data";
+        td.textContent = "El archivo está vacío.";
+        tr.appendChild(td);
+        pedidoTbody.appendChild(tr);
+        return;
+      }
+
       lineas.forEach((linea, index) => {
-        let partes = linea.split(";");
-        if (partes.length === 1) {
-          partes = linea.split(",");
+        if (index === 0 && /nombre/i.test(linea)) {
+          // tratar primera línea como encabezado si habla de "nombre"
+          return;
         }
+
+        let partes = linea.split(";");
+        if (partes.length === 1) partes = linea.split(",");
         if (partes.length < 2) return;
 
         const nombre = partes[0].trim();
         const cantidadStr = partes[1].trim().replace(",", ".");
         const cantidad = Number(cantidadStr);
 
-        if (!nombre || isNaN(cantidad)) {
-          return;
-        }
+        if (!nombre || isNaN(cantidad)) return;
 
         pedidoActual.push({
           nombre,
@@ -1699,9 +1639,34 @@
       URL.revokeObjectURL(url);
     }
 
-    // =============================
-    // HERRAMIENTAS Y VEHÍCULOS
-    // =============================
+    if (pedidoFileInput) {
+      pedidoFileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (ev) {
+          const texto = ev.target.result;
+          parsearPedidoCSV(texto);
+        };
+        reader.readAsText(file, "UTF-8");
+      });
+    }
+
+    if (btnDescargarPedido) {
+      btnDescargarPedido.addEventListener("click", descargarResumenPedido);
+    }
+
+    if (btnEliminarPedido) {
+      btnEliminarPedido.addEventListener("click", () => {
+        const confirmar = confirm("¿Seguro que quieres eliminar todo el listado del check list?");
+        if (!confirmar) return;
+        pedidoActual = [];
+        renderPedidoTabla();
+      });
+    }
+
+    // --------- HERRAMIENTAS Y VEHÍCULOS ---------
     let herramientas = [];
     let vehiculos = [];
 
@@ -1721,7 +1686,7 @@
         const v = localStorage.getItem(STORAGE_VEH);
         herramientas = h ? JSON.parse(h) : [];
         vehiculos = v ? JSON.parse(v) : [];
-      } catch (e) {
+      } catch {
         herramientas = [];
         vehiculos = [];
       }
@@ -1876,7 +1841,6 @@
       });
     }
 
-    // --- Acciones herramientas ---
     function marcarHerramientaEnUso(index) {
       const h = herramientas[index];
       if (!h) return;
@@ -1907,7 +1871,6 @@
       renderHerramientas();
     }
 
-    // --- Acciones vehículos ---
     function marcarVehiculoEnUso(index) {
       const v = vehiculos[index];
       if (!v) return;
@@ -1938,9 +1901,8 @@
       renderVehiculos();
     }
 
-    // --- Formularios HV ---
     if (formHerramienta && inputHerramienta) {
-      formHerramienta.addEventListener("submit", function (e) {
+      formHerramienta.addEventListener("submit", (e) => {
         e.preventDefault();
         const nombre = inputHerramienta.value.trim();
         if (!nombre) return;
@@ -1956,7 +1918,7 @@
     }
 
     if (formVehiculo && inputVehiculo) {
-      formVehiculo.addEventListener("submit", function (e) {
+      formVehiculo.addEventListener("submit", (e) => {
         e.preventDefault();
         const nombre = inputVehiculo.value.trim();
         if (!nombre) return;
@@ -1971,9 +1933,13 @@
       });
     }
 
-    // -----------------------------
-    // Inicio
-    // -----------------------------
+    // --------- BUSCADOR INVENTARIO ---------
+    const buscadorInventario = document.getElementById("buscadorInventario");
+    if (buscadorInventario) {
+      buscadorInventario.addEventListener("input", renderTabla);
+    }
+
+    // --------- INICIO ---------
     cargarDesdeStorage();
     renderTabla();
     renderComentarios();
