@@ -580,6 +580,7 @@
         <button class="tab-btn tab-active" data-tab="inventario">Inventario principal</button>
         <button class="tab-btn" data-tab="checklist">Check list de pedidos</button>
         <button class="tab-btn" data-tab="estado">Herramientas y vehículos</button>
+        <button class="tab-btn" data-tab="mantenciones">🛠️ Mantenciones</button>
       </div>
 
       <!-- TAB 1: INVENTARIO -->
@@ -695,15 +696,6 @@
 
             <div class="card">
               <h2>Inventario actual</h2>
-              <div class="actions-row" style="margin-top: 4px;">
-                <div class="actions-left">
-                  <input
-                    type="text"
-                    id="buscadorInventario"
-                    placeholder="Buscar por nombre, marca, talla o tipo..."
-                  />
-                </div>
-              </div>
               <div class="table-wrapper">
                 <table id="tablaInventario">
                   <thead>
@@ -792,15 +784,12 @@
             </table>
           </div>
 
-          <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center;">
+          <div style="margin-top: 10px;">
             <button id="btnDescargarPedido" class="btn-primary-small">
               Descargar resumen (CSV para Excel)
             </button>
-            <button id="btnEliminarPedido" class="btn-danger-small">
-              Eliminar listado
-            </button>
             <span class="small-muted">
-              Exporta el detalle de lo que hay y lo que falta, o elimina completamente el listado cargado.
+              Exporta el detalle de lo que hay y lo que falta.
             </span>
           </div>
         </div>
@@ -858,6 +847,170 @@
                 <tbody id="tbodyVehiculos"></tbody>
               </table>
             </div>
+          </div>
+        </div>
+
+      <!-- TAB 4: MANTENCIONES -->
+      <div id="tab-mantenciones" class="tab-content">
+        <div class="card">
+          <h2 class="section-title">Planificador de mantenciones</h2>
+          <p class="section-subtitle">
+            Calcula rápidamente cuántos EPP necesitas comprar según el número de personas y días de trabajo.
+          </p>
+
+          <!-- Datos generales de la mantención -->
+          <div class="section-box">
+            <h3>Datos generales</h3>
+            <div class="form-row" style="margin-top: 4px;">
+              <div class="field">
+                <label for="mNombreMantencion">Nombre de la mantención</label>
+                <input
+                  type="text"
+                  id="mNombreMantencion"
+                  placeholder="Ej: Mantención mayor filtros prensa"
+                />
+              </div>
+              <div class="field">
+                <label for="mFaenaMantencion">Faena / Mina</label>
+                <input
+                  type="text"
+                  id="mFaenaMantencion"
+                  placeholder="Ej: Gold Fields, Candelaria, etc."
+                />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="field small">
+                <label for="mPersonasMantencion">N° de personas</label>
+                <input
+                  type="number"
+                  id="mPersonasMantencion"
+                  min="1"
+                  value="33"
+                />
+              </div>
+              <div class="field small">
+                <label for="mDiasMantencion">N° de días</label>
+                <input
+                  type="number"
+                  id="mDiasMantencion"
+                  min="1"
+                  value="7"
+                />
+              </div>
+            </div>
+            <p class="small-muted">
+              Estos datos se usan para calcular automáticamente los totales de cada EPP.
+            </p>
+          </div>
+
+          <!-- EPP de la mantención -->
+          <div class="section-box">
+            <h3>EPP para esta mantención</h3>
+            <p class="small-muted">
+              Agrega los elementos y define si se calculan por persona (para toda la mantención) o por persona y por día.
+            </p>
+
+            <div class="form-row" style="margin-top: 6px;">
+              <div class="field">
+                <label for="mEppNombre">Nombre del EPP</label>
+                <input
+                  type="text"
+                  id="mEppNombre"
+                  placeholder="Ej: Guantes cabretilla, lentes claros, respiradores"
+                />
+              </div>
+              <div class="field small">
+                <label for="mEppUnidad">Unidad</label>
+                <select id="mEppUnidad">
+                  <option value="unidad">Unidad</option>
+                  <option value="par">Par</option>
+                  <option value="caja">Caja</option>
+                </select>
+              </div>
+              <div class="field small">
+                <label for="mEppModo">Modo de cálculo</label>
+                <select id="mEppModo">
+                  <option value="persona">Por persona (para toda la mantención)</option>
+                  <option value="dia">Por persona y por día</option>
+                </select>
+              </div>
+              <div class="field small">
+                <label for="mEppCantidad">Cantidad según modo</label>
+                <input
+                  type="number"
+                  id="mEppCantidad"
+                  min="0"
+                  step="0.5"
+                  placeholder="Ej: 2"
+                />
+              </div>
+            </div>
+
+            <p class="small-muted">
+              Ejemplo: Guantes de cabretilla → modo <strong>Por persona y por día</strong>, cantidad <strong>2</strong>.<br/>
+              Lentes de seguridad → modo <strong>Por persona</strong>, cantidad <strong>1</strong>.
+            </p>
+
+            <div class="actions-row">
+              <div class="actions-left">
+                <button type="button" id="mBtnAgregarEpp" class="btn primary">
+                  ➕ Agregar EPP
+                </button>
+                <button type="button" id="mBtnLimpiarEpp" class="btn secondary">
+                  🧹 Limpiar lista
+                </button>
+              </div>
+            </div>
+
+            <div class="table-wrapper" style="margin-top: 10px;">
+              <table class="table-simple" id="tablaMantencion">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Nombre EPP</th>
+                    <th>Unidad</th>
+                    <th>Modo</th>
+                    <th>Cant. base</th>
+                    <th>Personas</th>
+                    <th>Días</th>
+                    <th>Total a comprar</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+
+            <div class="actions-row" style="margin-top: 10px;">
+              <div class="actions-left">
+                <span class="small-muted">
+                  <strong>Ítems distintos:</strong>
+                  <span id="mResumenItems">0</span> |
+                  <strong>Total de unidades:</strong>
+                  <span id="mResumenUnidades">0</span>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Botones finales -->
+          <div class="actions-row" style="margin-top: 12px;">
+            <div class="actions-left">
+              <button type="button" id="mBtnGuardarLocal" class="btn secondary">
+                💾 Guardar mantención en este equipo
+              </button>
+              <button type="button" id="mBtnCargarLocal" class="btn secondary">
+                📂 Cargar último guardado
+              </button>
+              <button type="button" id="mBtnExportarExcel" class="btn primary">
+                📊 Exportar a Excel
+              </button>
+            </div>
+            <p class="hint">
+              El archivo se descargará como <strong>mantencion_hidromotions.xlsx</strong> para que puedas enviarlo o trabajarlo aparte.
+            </p>
           </div>
         </div>
       </div>
@@ -971,39 +1124,18 @@
       const tbody = document.querySelector("#tablaInventario tbody");
       tbody.innerHTML = "";
 
-      let texto = "";
-      const inputBuscador = document.getElementById("buscadorInventario");
-      if (inputBuscador) {
-        texto = inputBuscador.value.toLowerCase().trim();
-      }
-
-      const listaFiltrada = inventario.filter((item) => {
-        if (!texto) return true;
-        const cadena = [
-          item.nombre || "",
-          item.marca || "",
-          item.talla || "",
-          formatearTipo(item.tipo || "epp"),
-        ]
-          .join(" ")
-          .toLowerCase();
-        return cadena.includes(texto);
-      });
-
-      if (!listaFiltrada.length) {
+      if (!inventario.length) {
         const tr = document.createElement("tr");
         const td = document.createElement("td");
         td.colSpan = 7;
         td.className = "no-data";
-        td.textContent = texto
-          ? "No se encontraron ítems que coincidan con la búsqueda."
-          : "No hay ítems en el inventario todavía.";
+        td.textContent = "No hay ítems en el inventario todavía.";
         tr.appendChild(td);
         tbody.appendChild(tr);
         return;
       }
 
-      listaFiltrada.forEach((item) => {
+      inventario.forEach((item) => {
         const tr = document.createElement("tr");
         tr.dataset.id = item.id;
 
@@ -1432,7 +1564,6 @@
     const pedidoFileInput = document.getElementById("pedidoFile");
     const pedidoTbody = document.getElementById("pedidoTableBody");
     const btnDescargarPedido = document.getElementById("btnDescargarPedido");
-    const btnEliminarPedido = document.getElementById("btnEliminarPedido");
 
     function parsearPedidoCSV(texto) {
       pedidoActual = [];
@@ -1655,15 +1786,6 @@
 
     if (btnDescargarPedido) {
       btnDescargarPedido.addEventListener("click", descargarResumenPedido);
-    }
-
-    if (btnEliminarPedido) {
-      btnEliminarPedido.addEventListener("click", () => {
-        const confirmar = confirm("¿Seguro que quieres eliminar todo el listado del check list?");
-        if (!confirmar) return;
-        pedidoActual = [];
-        renderPedidoTabla();
-      });
     }
 
     // --------- HERRAMIENTAS Y VEHÍCULOS ---------
@@ -1933,10 +2055,208 @@
       });
     }
 
-    // --------- BUSCADOR INVENTARIO ---------
-    const buscadorInventario = document.getElementById("buscadorInventario");
-    if (buscadorInventario) {
-      buscadorInventario.addEventListener("input", renderTabla);
+    // --------- MANTENCIONES (PLANIFICADOR) ---------
+    const mNombreMantencion = document.getElementById("mNombreMantencion");
+    const mFaenaMantencion = document.getElementById("mFaenaMantencion");
+    const mPersonasMantencion = document.getElementById("mPersonasMantencion");
+    const mDiasMantencion = document.getElementById("mDiasMantencion");
+
+    const mEppNombre = document.getElementById("mEppNombre");
+    const mEppUnidad = document.getElementById("mEppUnidad");
+    const mEppModo = document.getElementById("mEppModo");
+    const mEppCantidad = document.getElementById("mEppCantidad");
+
+    const tablaMantencionBody = document.querySelector("#tablaMantencion tbody");
+    const mResumenItems = document.getElementById("mResumenItems");
+    const mResumenUnidades = document.getElementById("mResumenUnidades");
+
+    const mBtnAgregarEpp = document.getElementById("mBtnAgregarEpp");
+    const mBtnLimpiarEpp = document.getElementById("mBtnLimpiarEpp");
+    const mBtnGuardarLocal = document.getElementById("mBtnGuardarLocal");
+    const mBtnCargarLocal = document.getElementById("mBtnCargarLocal");
+    const mBtnExportarExcel = document.getElementById("mBtnExportarExcel");
+
+    let mantencionEpp = [];
+
+    function calcularTotalItemMantencion(item) {
+      const personas = Number(mPersonasMantencion.value || 0);
+      const dias = Number(mDiasMantencion.value || 0);
+      const base = Number(item.cantidad || 0);
+
+      if (item.modo === "persona") {
+        return base * personas;
+      }
+      return base * personas * dias;
+    }
+
+    function renderTablaMantencion() {
+      if (!tablaMantencionBody) return;
+      tablaMantencionBody.innerHTML = "";
+      let totalUnidades = 0;
+
+      mantencionEpp.forEach((item, index) => {
+        const totalItem = calcularTotalItemMantencion(item);
+        totalUnidades += totalItem;
+
+        const tr = document.createElement("tr");
+        const modoTexto =
+          item.modo === "persona"
+            ? "Por persona (toda la mantención)"
+            : "Por persona y por día";
+
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${item.nombre}</td>
+          <td>${item.unidad}</td>
+          <td>${modoTexto}</td>
+          <td>${item.cantidad}</td>
+          <td>${mPersonasMantencion.value || 0}</td>
+          <td>${mDiasMantencion.value || 0}</td>
+          <td>${totalItem}</td>
+          <td class="center">
+            <button type="button" class="btn-danger-small" data-index="${index}">Eliminar</button>
+          </td>
+        `;
+
+        tablaMantencionBody.appendChild(tr);
+      });
+
+      tablaMantencionBody.querySelectorAll("button.btn-danger-small").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const idx = Number(btn.dataset.index);
+          mantencionEpp.splice(idx, 1);
+          renderTablaMantencion();
+        });
+      });
+
+      if (mResumenItems) mResumenItems.textContent = mantencionEpp.length;
+      if (mResumenUnidades) mResumenUnidades.textContent = totalUnidades;
+    }
+
+    if (mBtnAgregarEpp) {
+      mBtnAgregarEpp.addEventListener("click", () => {
+        const nombre = (mEppNombre.value || "").trim();
+        const unidad = mEppUnidad.value;
+        const modo = mEppModo.value;
+        const cantidad = Number(mEppCantidad.value || 0);
+
+        if (!nombre || !cantidad || cantidad <= 0) {
+          alert("Completa el nombre del EPP y una cantidad válida.");
+          return;
+        }
+
+        mantencionEpp.push({ nombre, unidad, modo, cantidad });
+        mEppNombre.value = "";
+        mEppCantidad.value = "";
+        mEppNombre.focus();
+        renderTablaMantencion();
+      });
+    }
+
+    if (mBtnLimpiarEpp) {
+      mBtnLimpiarEpp.addEventListener("click", () => {
+        if (!mantencionEpp.length) return;
+        const ok = confirm("¿Seguro que quieres borrar todos los EPP de esta mantención?");
+        if (!ok) return;
+        mantencionEpp = [];
+        renderTablaMantencion();
+      });
+    }
+
+    if (mPersonasMantencion) {
+      mPersonasMantencion.addEventListener("input", renderTablaMantencion);
+    }
+    if (mDiasMantencion) {
+      mDiasMantencion.addEventListener("input", renderTablaMantencion);
+    }
+
+    const LOCAL_KEY_MANTENCION = "hidromotions_mantencion_plan";
+
+    if (mBtnGuardarLocal) {
+      mBtnGuardarLocal.addEventListener("click", () => {
+        const data = {
+          nombre: mNombreMantencion ? mNombreMantencion.value : "",
+          faena: mFaenaMantencion ? mFaenaMantencion.value : "",
+          personas: mPersonasMantencion ? mPersonasMantencion.value : 0,
+          dias: mDiasMantencion ? mDiasMantencion.value : 0,
+          epp: mantencionEpp,
+        };
+        try {
+          localStorage.setItem(LOCAL_KEY_MANTENCION, JSON.stringify(data));
+          alert("Mantención guardada en este navegador ✅");
+        } catch (e) {
+          alert("No se pudo guardar la mantención en este navegador.");
+        }
+      });
+    }
+
+    if (mBtnCargarLocal) {
+      mBtnCargarLocal.addEventListener("click", () => {
+        const raw = localStorage.getItem(LOCAL_KEY_MANTENCION);
+        if (!raw) {
+          alert("No hay una mantención guardada todavía.");
+          return;
+        }
+        try {
+          const data = JSON.parse(raw);
+          if (mNombreMantencion) mNombreMantencion.value = data.nombre || "";
+          if (mFaenaMantencion) mFaenaMantencion.value = data.faena || "";
+          if (mPersonasMantencion) mPersonasMantencion.value = data.personas || 0;
+          if (mDiasMantencion) mDiasMantencion.value = data.dias || 0;
+          mantencionEpp = Array.isArray(data.epp) ? data.epp : [];
+          renderTablaMantencion();
+          alert("Mantención cargada ✅");
+        } catch (e) {
+          alert("Hubo un problema al leer los datos guardados.");
+        }
+      });
+    }
+
+    if (mBtnExportarExcel) {
+      mBtnExportarExcel.addEventListener("click", () => {
+        if (!mantencionEpp.length) {
+          alert("No hay EPP en la lista para exportar.");
+          return;
+        }
+
+        const wb = XLSX.utils.book_new();
+        const personas = Number(mPersonasMantencion.value || 0);
+        const dias = Number(mDiasMantencion.value || 0);
+
+        const data = [
+          ["Hidromotions - Plan de mantención"],
+          ["Nombre mantención:", mNombreMantencion ? mNombreMantencion.value : ""],
+          ["Faena / Mina:", mFaenaMantencion ? mFaenaMantencion.value : ""],
+          ["Personas:", personas],
+          ["Días:", dias],
+          [],
+          ["#", "Nombre EPP", "Unidad", "Modo", "Cant. base", "Personas", "Días", "TOTAL a comprar"],
+        ];
+
+        mantencionEpp.forEach((item, index) => {
+          const totalItem = calcularTotalItemMantencion(item);
+          const modoTexto =
+            item.modo === "persona"
+              ? "Por persona (toda la mantención)"
+              : "Por persona y por día";
+
+          data.push([
+            index + 1,
+            item.nombre,
+            item.unidad,
+            modoTexto,
+            item.cantidad,
+            personas,
+            dias,
+            totalItem,
+          ]);
+        });
+
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        XLSX.utils.book_append_sheet(wb, ws, "Mantención");
+
+        XLSX.writeFile(wb, "mantencion_hidromotions.xlsx");
+      });
     }
 
     // --------- INICIO ---------
