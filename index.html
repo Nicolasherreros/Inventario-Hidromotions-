@@ -577,14 +577,14 @@
 
     <div class="tabs-container">
       <div class="tabs-header">
-        <button class="tab-btn tab-active" data-tab="inventario">Inventario principal</button>
+        <button class="tab-btn" data-tab="inventario">Inventario principal</button>
         <button class="tab-btn" data-tab="checklist">Check list de pedidos</button>
         <button class="tab-btn" data-tab="estado">Herramientas y vehículos</button>
-        <button class="tab-btn" data-tab="mantenciones">🛠️ Mantenciones</button>
+        <button class="tab-btn tab-active" data-tab="mantenciones">🛠️ Mantenciones</button>
       </div>
 
       <!-- TAB 1: INVENTARIO -->
-      <div id="tab-inventario" class="tab-content tab-content-active">
+      <div id="tab-inventario" class="tab-content">
         <div class="layout">
           <div>
             <div class="card">
@@ -849,16 +849,16 @@
             </div>
           </div>
         </div>
+      </div>
 
       <!-- TAB 4: MANTENCIONES -->
-      <div id="tab-mantenciones" class="tab-content">
+      <div id="tab-mantenciones" class="tab-content tab-content-active">
         <div class="card">
           <h2 class="section-title">Planificador de mantenciones</h2>
           <p class="section-subtitle">
             Calcula rápidamente cuántos EPP necesitas comprar según el número de personas y días de trabajo.
           </p>
 
-          <!-- Datos generales de la mantención -->
           <div class="section-box">
             <h3>Datos generales</h3>
             <div class="form-row" style="margin-top: 4px;">
@@ -905,7 +905,6 @@
             </p>
           </div>
 
-          <!-- EPP de la mantención -->
           <div class="section-box">
             <h3>EPP para esta mantención</h3>
             <p class="small-muted">
@@ -995,7 +994,6 @@
             </div>
           </div>
 
-          <!-- Botones finales -->
           <div class="actions-row" style="margin-top: 12px;">
             <div class="actions-left">
               <button type="button" id="mBtnGuardarLocal" class="btn secondary">
